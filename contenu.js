@@ -109,7 +109,7 @@ window.PORTFOLIO = {
           ],
           // Liens propres à la V1 (affichés sous la liste)
           liens: [
-            { texte: { fr: "Code de la V1 sur GitHub", en: "V1 code on GitHub" }, url: "https://github.com/TONIO1547/STAR" }
+            // { texte: { fr: "Code de la V1 sur GitHub", en: "V1 code on GitHub" }, url: "https://github.com/TONIO1547/NOM-DU-DEPOT" }   ← enlève les // et mets l'adresse du dépôt
           ],
           // Photo et modèle 3D de la V1
           medias: [
