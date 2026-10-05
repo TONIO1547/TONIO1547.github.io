@@ -378,4 +378,15 @@
 
   if (PAGE === "projet") pageProjet(); else pageAccueil();
 
+  /* ---------- Cartouche (pied de page façon plan) ---------- */
+  function cell(k, v, cls) { return el("td", { class: cls || null }, [el("span", { class: "k", text: k }), typeof v === "string" ? document.createTextNode(v) : v]); }
+  $("cartouche").appendChild(el("tbody", null, [
+    el("tr", null, [
+      cell(t("Titre"), el("span", { class: "titre-c", text: t("Portfolio") }), "large"),
+      cell(t("Auteur"), nomComplet),
+      cell(t("Établissement"), ID.ecole || ""),
+      cell(t("Révision"), P.miseAJour || P.Update || "")
+    ])
+  ]));
+
 })();
