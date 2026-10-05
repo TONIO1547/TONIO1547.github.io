@@ -136,14 +136,6 @@ window.PORTFOLIO = {
               },
               media: { type: "video", src: "media/demo_tracking.mp4",
                        legende: { fr: "La tourelle suit le drone (PID) et le pointe au laser", en: "The turret tracks the drone (PID) and points the laser at it" } }
-            },
-            {
-              texte: {
-                fr: "Vidéo de fonctionnement : vue de la caméra de la tourelle pendant qu'elle détecte et suit le drone en continu.",
-                en: "Operating video: the turret camera's view while it continuously detects and tracks the drone."
-              },
-              media: { type: "video", src: "media/tracking_V1.mp4",
-                       legende: { fr: "La V1 en fonctionnement", en: "V1 in operation" } }
             }
           ]
         },
