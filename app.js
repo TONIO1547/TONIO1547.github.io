@@ -75,6 +75,19 @@
     return el("div", { class: "medias" + (ok.length === 2 ? " deux" : ok.length > 2 ? " multi" : "") }, ok);
   }
 
+  function demos(liste) {
+    if (!liste || !liste.length) return null;
+    return el("div", { class: "demos" }, liste.map(function (d) {
+      var m = d.media ? media(d.media) : null;
+      if (!d.texte && !m) return null;
+      return el("div", { class: "demo" }, [
+        d.texte ? el("p", { class: "demo-texte", text: d.texte }) :
+          (EDITION ? el("div", { class: "emplacement", text: "Texte à écrire → contenu.js, champ texte de cette démo." }) : null),
+        m
+      ]);
+    }));
+  }
+
   /* ---------- Visionneuse ---------- */
   var dlg = $("visionneuse");
   function ouvrir(src, leg) {
@@ -137,7 +150,8 @@
       w.appendChild(el("div", { class: "versions" }, phare.versions.map(function (v) {
         return el("article", { class: "version" }, [
           el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
-          puces(v.points)
+          puces(v.points),
+          demos(v.demos)
         ]);
       })));
     }

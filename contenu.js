@@ -79,6 +79,18 @@ window.PORTFOLIO = {
             "Post-traitement NMS réécrit à la main et correction des sorties du modèle",
             "Réglage des PID pan / tilt avec filtre passe-bas",
             "ESP32 piloté en UDP, interface web Flask (flux caméra + commande moteurs) lancée en service systemd"
+          ],
+          // Démonstrations de la V1 : chaque bloc = ton texte, puis la vidéo en dessous.
+          // Écris ton texte entre les guillemets de  texte: "" . Tant qu'il est vide, rien ne s'affiche.
+          demos: [
+            {
+              texte: "",   // ← ton texte sur la détection
+              media: { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg", legende: "Détection du drone en direct sur les deux caméras" }
+            },
+            {
+              texte: "",   // ← ton texte sur le suivi
+              media: { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg", legende: "La tourelle suit le drone (PID) et le pointe au laser" }
+            }
           ]
         },
         {
@@ -106,9 +118,7 @@ window.PORTFOLIO = {
         // { texte: "Code sur GitHub", url: "https://github.com/TONIO1547/STAR" },  ← à activer si tu rends le dépôt public
       ],
       medias: [
-        { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg", legende: "V1 : la tourelle suit le drone (PID) et le pointe au laser" },
-        { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg", legende: "V1 : détection du drone en direct sur les deux caméras" }
-        // Ajoute ici d'autres photos, vidéos, ou le modèle 3D de la tourelle…
+        // Médias généraux du projet (affichés après le résumé) : photos, modèle 3D de la tourelle…
       ]
     },
 
