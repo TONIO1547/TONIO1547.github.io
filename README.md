@@ -1,0 +1,53 @@
+# Portfolio — Antoine
+
+Site en ligne : **https://tonio1547.github.io**
+
+## Modifier le site
+
+Tout le contenu (textes, projets, compétences, parcours, liens, médias) est dans **`contenu.js`**.
+Tu n'as pas besoin de toucher aux autres fichiers.
+
+Depuis github.com :
+1. Ouvre `contenu.js` → icône crayon (Edit).
+2. Modifie, puis **Commit changes**.
+3. Le site se met à jour en une minute environ (onglet **Actions** pour suivre).
+
+Si la page affiche « Erreur dans contenu.js », il manque en général une virgule ou un guillemet dans ta dernière modification.
+
+## Ajouter une photo, une vidéo ou un modèle 3D
+
+1. Ouvre le dossier `media/` → **Add file → Upload files** → dépose ton fichier → **Commit changes**.
+2. Dans `contenu.js`, ajoute une ligne dans la liste `medias: [ ]` du projet concerné :
+
+```js
+medias: [
+  { type: "image",    src: "media/star-v2.jpg",  legende: "Tourelle V2 au banc" },
+  { type: "video",    src: "media/suivi.mp4",    legende: "Suivi d'un drone", poster: "media/suivi.jpg" },
+  { type: "youtube",  id: "ID_DE_LA_VIDEO",      legende: "Démo complète" },
+  { type: "modele3d", src: "media/tourelle.glb", legende: "Modèle CAO", poster: "media/tourelle.jpg" }
+]
+```
+
+Le premier média de la liste est l'image principale du projet.
+
+**Astuce :** ajoute `#edition` à la fin de l'adresse (https://tonio1547.github.io/#edition) puis recharge la page : chaque projet sans média affiche un cadre pointillé qui indique où ajouter ses médias.
+
+### Tailles conseillées
+- Images : `.jpg` ou `.webp`, environ 1600 px de large, moins de 1 Mo.
+- Vidéos : `.mp4` (H.264), moins de 50 Mo. Plus lourd → YouTube (`type: "youtube"`, l'id est la partie après `v=` dans le lien).
+- Modèles 3D : `.glb`, idéalement moins de 10 Mo.
+
+### Exporter un modèle SolidWorks en .glb
+SolidWorks n'exporte pas directement en `.glb`. Le plus simple :
+1. Dans SolidWorks : **Fichier → Enregistrer sous → STL** (ou `.step`), en résolution « fine ».
+2. Ouvre le fichier dans **Blender** (gratuit) : *File → Import → STL*.
+3. Applique éventuellement des couleurs/matériaux, puis *File → Export → glTF 2.0*, format **glTF Binary (.glb)**.
+
+## Fichiers
+| Fichier | Rôle |
+|---|---|
+| `contenu.js` | Tout le contenu — **le fichier à modifier** |
+| `media/` | Photos, vidéos, modèles 3D, CV |
+| `index.html` | Structure de la page |
+| `style.css` | Mise en forme (couleurs en haut du fichier) |
+| `app.js` | Construit la page à partir de `contenu.js` + animation du viseur |
