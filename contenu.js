@@ -111,7 +111,7 @@ window.PORTFOLIO = {
           ],
           // Liens propres à la V1 (affichés sous la liste)
           liens: [
-            // { texte: { fr: "Code de la V1 sur GitHub", en: "V1 code on GitHub" }, url: "https://github.com/TONIO1547/NOM-DU-DEPOT" }   ← enlève les // et mets l'adresse du dépôt
+            { texte: { fr: "Code et fichiers de la V1 sur GitHub", en: "V1 code and files on GitHub" }, url: "https://github.com/TONIO1547/STAR_V1" }
           ],
           // Photo et modèle 3D de la V1
           medias: [
@@ -297,26 +297,78 @@ On S.T.A.R., the board measures the position of the tilt axis. That position is 
     {
       id: "sumo",
       titre: { fr: "Robot sumo et suiveur de ligne", en: "Sumo and line-follower robot" },
-      periode: { fr: "Terminale SI", en: "High school, engineering science" },
+      periode: { fr: "Lycée, Sciences de l'ingénieur", en: "High school, engineering science" },
       statut: "Terminé",
       resume: {
-        fr: "Robot sur Arduino Uno conçu en équipe de trois en Sciences de l'ingénieur, capable de suivre une ligne et de combattre en sumo.",
-        en: "Arduino Uno robot built by a team of three in high-school engineering science, able to follow a line and compete in sumo."
+        fr: "Robot sur Arduino Uno conçu en équipe de trois en Sciences de l'ingénieur, capable de suivre une ligne et de combattre en sumo. Mécanique conçue sous SolidWorks et imprimée en 3D.",
+        en: "Arduino Uno robot built by a team of three in high-school engineering science, able to follow a line and compete in sumo. Mechanics designed in SolidWorks and 3D printed."
       },
       points: [
         { fr: "Rôle de chef de projet : répartition et suivi des tâches", en: "Project lead: task allocation and follow-up" },
-        { fr: "Capteurs de ligne et logique de combat sur Arduino", en: "Line sensors and fight logic on Arduino" }
+        { fr: "Conception SolidWorks : coque, châssis, roues motrices", en: "SolidWorks design: shell, chassis, drive wheels" },
+        { fr: "Capteur à ultrasons pour détecter l'adversaire, capteurs de ligne", en: "Ultrasonic sensor to detect the opponent, line sensors" }
       ],
-      tags: ["Arduino", { fr: "Travail en équipe", en: "Teamwork" }],
-      liens: [],
+      tags: ["Arduino", "SolidWorks", { fr: "Impression 3D", en: "3D printing" }, { fr: "Travail en équipe", en: "Teamwork" }],
+      liens: [
+        { texte: { fr: "Fichiers CAO et code sur GitHub", en: "CAD files and code on GitHub" }, url: "https://github.com/TONIO1547/robot-sumo" }
+      ],
       // Texte de la page détaillée (une section vide n'apparaît pas)
       details: [
-        { titre: { fr: "Le défi", en: "The challenge" }, texte: { fr: "", en: "" } },
-        { titre: { fr: "Conception du robot", en: "Robot design" }, texte: { fr: "", en: "" } },
-        { titre: { fr: "Mon rôle dans l'équipe", en: "My role in the team" }, texte: { fr: "", en: "" } },
+        {
+          titre: { fr: "Le défi", en: "The challenge" },
+          texte: {
+            fr: `Concevoir un robot autonome capable de deux épreuves : suivre une ligne au sol, et combattre en sumo robotique, c'est-à-dire repérer le robot adverse et le pousser hors d'une arène circulaire sans en sortir soi-même.
+
+Le projet a été mené en équipe de trois dans le cadre des Sciences de l'ingénieur, de la conception jusqu'au robot fonctionnel.`,
+            en: `Design an autonomous robot for two events: following a line on the ground, and robot sumo, which means finding the opposing robot and pushing it out of a circular ring without leaving it.
+
+The project was carried out by a team of three in high-school engineering science, from design to a working robot.`
+          }
+        },
+        {
+          titre: { fr: "Conception mécanique", en: "Mechanical design" },
+          texte: {
+            fr: `J'ai modélisé le robot sous SolidWorks : coque, faces avant, arrière et latérales, dessus, roues motrices, roue centrale et roulettes, puis l'assemblage complet.
+
+La forme en biseau à l'avant sert à passer sous l'adversaire pour le soulever et le pousser. La coque a connu six versions avant la version finale, et les pièces ont été fabriquées en impression 3D.`,
+            en: `I modelled the robot in SolidWorks: shell, front, rear and side panels, top, drive wheels, centre wheel and casters, then the full assembly.
+
+The wedge shape at the front is meant to slide under the opponent to lift and push it. The shell went through six versions before the final one, and the parts were 3D printed.`
+          },
+          medias: [
+            { type: "image", src: "media/sumo_cao.png", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
+          ]
+        },
+        {
+          titre: { fr: "Itérations et impression 3D", en: "Iterations and 3D printing" },
+          texte: {
+            fr: "Une première version du robot, avec un autre châssis et des boîtes de moteurs imprimées, a précédé la version finale. Les roues motrices ont elles aussi été retravaillées plusieurs fois pour s'adapter aux moteurs et à l'impression.",
+            en: "A first version of the robot, with a different chassis and printed motor housings, came before the final one. The drive wheels were also reworked several times to fit the motors and the printing process."
+          },
+          medias: [
+            { type: "image", src: "media/sumo_roue_motrice.png", legende: { fr: "Roue motrice, version finale", en: "Drive wheel, final version" } },
+            { type: "image", src: "media/sumo_chassis_v1.png", legende: { fr: "Châssis de la première version", en: "Chassis of the first version" } }
+          ]
+        },
+        {
+          titre: { fr: "Électronique et capteurs", en: "Electronics and sensors" },
+          texte: {
+            fr: "Le robot est piloté par une carte Arduino Uno. Des capteurs de ligne lui permettent de suivre le tracé et de rester dans l'arène, et un capteur à ultrasons HC-SR04 mesure la distance de l'adversaire pour aller le chercher.",
+            en: "The robot is driven by an Arduino Uno board. Line sensors let it follow the track and stay inside the ring, and an HC-SR04 ultrasonic sensor measures the distance to the opponent so it can go after it."
+          }
+        },
+        {
+          titre: { fr: "Mon rôle dans l'équipe", en: "My role in the team" },
+          texte: {
+            fr: "J'étais chef de projet : découper le travail, répartir les tâches entre les trois membres de l'équipe et suivre l'avancement. Je me suis aussi occupé de la conception mécanique sous SolidWorks.",
+            en: "I was the project lead: breaking down the work, assigning tasks across the three team members and tracking progress. I also handled the mechanical design in SolidWorks."
+          }
+        },
         { titre: { fr: "Résultat", en: "Outcome" }, texte: { fr: "", en: "" } }
       ],
-      medias: []
+      medias: [
+        { type: "image", src: "media/sumo_cao.png", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
+      ]
     }
   ],
 
