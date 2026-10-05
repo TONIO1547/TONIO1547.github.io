@@ -14,6 +14,17 @@ Depuis github.com :
 
 Si la page affiche « Erreur dans contenu.js », il manque en général une virgule ou un guillemet dans ta dernière modification.
 
+## Français / anglais
+
+Le bouton **FR / EN** en haut du site change la langue. Dans `contenu.js`, chaque texte s'écrit dans les deux langues :
+
+```js
+titre: { fr: "Carte encodeur", en: "Encoder board" },
+```
+
+Un texte simple `"…"` s'affiche tel quel dans les deux langues. Si `en` est vide, le français s'affiche.
+Pour envoyer directement la version anglaise à quelqu'un : https://tonio1547.github.io/?lang=en
+
 ## Page détaillée d'un projet
 
 Chaque projet a sa propre page (clic sur son titre en page d'accueil), à l'adresse `projet.html?id=…`.

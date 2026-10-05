@@ -3,6 +3,61 @@
   "use strict";
   var P = window.PORTFOLIO;
   if (!P) return; // l'erreur de contenu.js est déjà affichée en haut de la page (voir index.html)
+  /* ---------- Langue (FR / EN) ---------- */
+  var LANG = (function () {
+    var q = new URLSearchParams(location.search).get("lang");
+    if (q === "fr" || q === "en") { try { localStorage.setItem("lang", q); } catch (e) {} return q; }
+    try { var m = localStorage.getItem("lang"); if (m === "fr" || m === "en") return m; } catch (e) {}
+    return /^fr/i.test(navigator.language || "fr") ? "fr" : "en";
+  })();
+  document.documentElement.lang = LANG;
+  // Remplace partout { fr: "…", en: "…" } par le texte de la langue choisie
+  function estBilingue(v) {
+    if (!v || typeof v !== "object" || Array.isArray(v)) return false;
+    var k = Object.keys(v);
+    return k.length > 0 && k.every(function (x) { return x === "fr" || x === "en"; });
+  }
+  function resoudre(v) {
+    if (estBilingue(v)) return (LANG === "en" ? (v.en || v.fr) : (v.fr || v.en)) || "";
+    if (Array.isArray(v)) return v.map(resoudre);
+    if (v && typeof v === "object") { var o = {}; for (var k in v) o[k] = resoudre(v[k]); return o; }
+    return v;
+  }
+  P = resoudre(P);
+  // Textes de l'interface (titres, boutons) : français → anglais
+  var EN = {
+    "Aller au contenu": "Skip to content", "Projets": "Projects", "Compétences": "Skills", "Parcours": "Background", "Contact": "Contact",
+    "Autres projets": "Other projects", "Électronique, cartes sur mesure et premiers robots.": "Electronics, custom boards and early robots.",
+    "Ce que j'ai mis en pratique sur mes projets.": "What I have put into practice in my projects.",
+    "Stage, projet, question sur S.T.A.R. : écrivez-moi.": "Internship, project, question about S.T.A.R.: get in touch.",
+    "Robotique": "Robotics", "Voir S.T.A.R.": "See S.T.A.R.", "Télécharger mon CV": "Download my CV",
+    "Projet phare": "Flagship project", "Projet": "Project", "Images et vidéos": "Images and videos",
+    "Chaîne de traitement": "Processing pipeline", "Versions": "Versions", "Objectifs": "Goals",
+    "Page détaillée du projet →": "Full project page →", "Voir le projet →": "View project →",
+    "Divers": "Other", "E-mail": "Email", "Copier l'adresse": "Copy address", "Adresse copiée": "Address copied",
+    "Titre": "Title", "Auteur": "Author", "Établissement": "School", "Révision": "Revision", "Feuille": "Sheet", "Portfolio": "Portfolio",
+    "← Retour aux projets": "← Back to projects", "Points clés": "Key points", "← Précédent": "← Previous", "Suivant →": "Next →",
+    "Projet introuvable": "Project not found", "Ce projet n'existe pas ou son id a changé.": "This project does not exist or its id has changed.",
+    "← Tous les projets": "← All projects", "Autres projets du portfolio": "Other projects",
+    "Terminé": "Completed", "En cours": "In progress", "Prototype": "Prototype",
+    "Vidéo": "Video", "3D · fais tourner": "3D · drag to rotate", "Agrandir : ": "Enlarge: ", "Fermer": "Close"
+  };
+  function t(fr) { return LANG === "en" ? (EN[fr] || fr) : fr; }
+  [].forEach.call(document.querySelectorAll("[data-t]"), function (n) { n.textContent = t(n.textContent.trim()); });
+  // Interrupteur FR / EN dans la barre du haut
+  (function () {
+    var bt = document.getElementById("langue");
+    if (!bt) return;
+    bt.setAttribute("aria-label", LANG === "en" ? "Passer le site en français" : "Switch site to English");
+    [].forEach.call(bt.querySelectorAll("[data-l]"), function (s) { if (s.getAttribute("data-l") === LANG) s.className = "actif"; });
+    bt.addEventListener("click", function () {
+      var autre = LANG === "en" ? "fr" : "en";
+      try { localStorage.setItem("lang", autre); } catch (e) {}
+      var u = new URL(location.href); u.searchParams.set("lang", autre);
+      location.replace(u.toString());
+    });
+  })();
+
   var ID = P.identite || {};
   var EDITION = location.hash === "#edition";
   var PAGE = document.body.getAttribute("data-page") || "accueil";
@@ -27,7 +82,7 @@
   }
   function $(id) { return document.getElementById(id); }
   function slug(s) { return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z]+/g, "-").replace(/^-|-$/g, ""); }
-  function badge(statut) { return statut ? el("span", { class: "badge " + slug(statut), text: statut }) : null; }
+  function badge(statut) { return statut ? el("span", { class: "badge " + slug(statut), text: t(statut) }) : null; }
   function tags(liste) { return (liste && liste.length) ? el("ul", { class: "tags" }, liste.map(function (t) { return el("li", { text: t }); })) : null; }
   function puces(liste) { return (liste && liste.length) ? el("ul", { class: "puces" }, liste.map(function (t) { return el("li", { text: t }); })) : null; }
   function liens(liste) {
@@ -46,10 +101,10 @@
   }
   function url(u) { return u ? encodeURI(u) : u; }
   function media(m) {
-    var cadre = el("div", { class: "cadre" });
-    var etiquette = { image: null, video: "Vidéo", youtube: "Vidéo", modele3d: "3D · fais tourner" }[m.type];
+    var cadre = el("div", { class: "cadre cadre-" + m.type });
+    var etiquette = { image: null, video: t("Vidéo"), youtube: t("Vidéo"), modele3d: t("3D · fais tourner") }[m.type];
     if (m.type === "image") {
-      var btn = el("button", { class: "zoom", type: "button", "aria-label": "Agrandir : " + (m.legende || "image") }, [
+      var btn = el("button", { class: "zoom", type: "button", "aria-label": t("Agrandir : ") + (m.legende || "image") }, [
         el("img", { src: url(m.src), alt: m.legende || "", loading: "lazy" })
       ]);
       btn.addEventListener("click", function () { ouvrir(url(m.src), m.legende); });
@@ -111,7 +166,7 @@
 
   /* ================= ACCUEIL ================= */
   function pageAccueil() {
-  document.title = nomComplet + " — Robotique";
+  document.title = nomComplet + " — " + t("Robotique");
   /* ---------- Hero ---------- */
   $("h-ecole").textContent = ID.ecole || "";
   var h1 = $("h-nom"); h1.textContent = ID.prenom || "";
@@ -121,8 +176,8 @@
   $("h-accroche").textContent = ID.accroche || "";
   $("h-dispo").textContent = ID.disponibilite || "";
   var act = $("h-actions");
-  act.appendChild(el("a", { class: "btn plein", href: "#phare", text: "Voir S.T.A.R." }));
-  if (ID.cv) act.appendChild(el("a", { class: "btn", href: url(ID.cv), target: "_blank", rel: "noopener", text: "Télécharger mon CV" }));
+  act.appendChild(el("a", { class: "btn plein", href: "#phare", text: t("Voir S.T.A.R.") }));
+  if (ID.cv) act.appendChild(el("a", { class: "btn", href: url(ID.cv), target: "_blank", rel: "noopener", text: t("Télécharger mon CV") }));
   if (ID.github) act.appendChild(el("a", { class: "btn", href: ID.github, target: "_blank", rel: "noopener", text: "GitHub ↗" }));
   if (ID.linkedin) act.appendChild(el("a", { class: "btn", href: ID.linkedin, target: "_blank", rel: "noopener", text: "LinkedIn ↗" }));
 
@@ -134,7 +189,7 @@
   else {
     var chemin = "projets[" + iPhare + "]";
     var w = el("div", { class: "wrap" });
-    w.appendChild(el("p", { class: "eyebrow", text: "Projet phare · " + (phare.periode || "") }));
+    w.appendChild(el("p", { class: "eyebrow", text: t("Projet phare") + (phare.periode ? " · " + phare.periode : "") }));
     w.appendChild(el("div", { class: "phare-tete" }, [
       el("div", null, [
         phare.logo
@@ -147,16 +202,16 @@
     w.appendChild(el("p", { class: "phare-resume", text: phare.resume || "" }));
 
     var g = galerie(phare.medias, chemin);
-    if (g) { w.appendChild(el("p", { class: "cote", text: "Images et vidéos" })); w.appendChild(g); }
+    if (g) { w.appendChild(el("p", { class: "cote", text: t("Images et vidéos") })); w.appendChild(g); }
 
     if (phare.chaine && phare.chaine.length) {
-      w.appendChild(el("p", { class: "cote", text: "Chaîne de traitement" }));
+      w.appendChild(el("p", { class: "cote", text: t("Chaîne de traitement") }));
       w.appendChild(el("ol", { class: "chaine" }, phare.chaine.map(function (c) {
         return el("li", null, [el("b", { text: c.etape }), el("span", { text: c.detail })]);
       })));
     }
     if (phare.versions && phare.versions.length) {
-      w.appendChild(el("p", { class: "cote", text: "Versions" }));
+      w.appendChild(el("p", { class: "cote", text: t("Versions") }));
       w.appendChild(el("div", { class: "versions" }, phare.versions.map(function (v) {
         return el("article", { class: "version" }, [
           el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
@@ -166,13 +221,13 @@
       })));
     }
     if (phare.objectifs && phare.objectifs.length) {
-      w.appendChild(el("p", { class: "cote", text: "Objectifs" }));
+      w.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
       w.appendChild(el("div", { class: "objectifs-wrap" }, [
         el("ol", { class: "objectifs" }, phare.objectifs.map(function (o) { return el("li", { text: o }); }))
       ]));
     }
     w.appendChild(el("div", { class: "pied-phare" }, [tags(phare.tags), el("div", { class: "liens" }, [
-      el("a", { class: "btn plein", href: lienProjet(phare), text: "Page détaillée du projet →" }),
+      el("a", { class: "btn plein", href: lienProjet(phare), text: t("Page détaillée du projet →") }),
       liens(phare.liens)
     ])]));
     secPhare.appendChild(w);
@@ -189,7 +244,7 @@
       p.resume ? el("p", { text: p.resume }) : null,
       puces(p.points),
       tags(p.tags),
-      el("a", { class: "voir", href: lienProjet(p), text: "Voir le projet →" })
+      el("a", { class: "voir", href: lienProjet(p), text: t("Voir le projet →") })
     ]));
   });
   if (!liste.children.length) $("projets").remove();
@@ -202,7 +257,7 @@
     comp.appendChild(el("div", { class: "comp" }, [el("h3", { text: c.domaine }), el("ul", null, c.items.map(function (t) { return el("li", { text: t }); }))]));
   });
   if (P.divers && P.divers.length) {
-    comp.parentNode.appendChild(el("p", { class: "divers mono", text: "Divers · " + P.divers.join(" · ") }));
+    comp.parentNode.appendChild(el("p", { class: "divers mono", text: t("Divers") + " · " + P.divers.join(" · ") }));
   }
 
   /* ---------- Parcours ---------- */
@@ -221,15 +276,15 @@
   /* ---------- Contact ---------- */
   var ci = $("contact-in");
   if (ID.email) {
-    var b = el("button", { class: "copier", type: "button", text: "Copier l'adresse" });
+    var b = el("button", { class: "copier", type: "button", text: t("Copier l'adresse") });
     b.addEventListener("click", function () {
-      var fini = function () { b.textContent = "Adresse copiée"; setTimeout(function () { b.textContent = "Copier l'adresse"; }, 2000); };
+      var fini = function () { b.textContent = t("Adresse copiée"); setTimeout(function () { b.textContent = t("Copier l'adresse"); }, 2000); };
       if (navigator.clipboard) navigator.clipboard.writeText(ID.email).then(fini, function () { selectionner(); });
       else selectionner();
     });
     var val = el("a", { class: "val", href: "mailto:" + ID.email, text: ID.email });
     function selectionner() { var r = document.createRange(); r.selectNodeContents(val); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-    ci.appendChild(el("div", { class: "carte-contact" }, [el("span", { class: "lbl", text: "E-mail" }), val, b]));
+    ci.appendChild(el("div", { class: "carte-contact" }, [el("span", { class: "lbl", text: t("E-mail") }), val, b]));
   }
   [["GitHub", ID.github], ["LinkedIn", ID.linkedin]].forEach(function (x) {
     if (!x[1]) return;
@@ -253,11 +308,11 @@
     var idx = projets.findIndex(function (p) { return p.id === id; });
     var main = $("contenu");
     if (idx < 0) {
-      document.title = "Projet introuvable — " + nomComplet;
+      document.title = t("Projet introuvable") + " — " + nomComplet;
       main.appendChild(el("section", { class: "wrap bloc" }, [
-        el("h1", { class: "detail-titre", text: "Projet introuvable" }),
-        el("p", { class: "bloc-sous", text: "Ce projet n'existe pas ou son id a changé." }),
-        el("p", null, [el("a", { class: "btn", href: "index.html#projets", text: "← Tous les projets" })])
+        el("h1", { class: "detail-titre", text: t("Projet introuvable") }),
+        el("p", { class: "bloc-sous", text: t("Ce projet n'existe pas ou son id a changé.") }),
+        el("p", null, [el("a", { class: "btn", href: "index.html#projets", text: t("← Tous les projets") })])
       ]));
       return;
     }
@@ -266,8 +321,8 @@
     document.title = p.titre + " — " + nomComplet;
 
     var tete = el("header", { class: "detail-tete wrap" }, [
-      el("a", { class: "retour mono", href: p.phare ? "index.html#phare" : "index.html#projets", text: "← Retour aux projets" }),
-      el("p", { class: "eyebrow", text: [p.phare ? "Projet phare" : "Projet", p.periode].filter(Boolean).join(" · ") }),
+      el("a", { class: "retour mono", href: p.phare ? "index.html#phare" : "index.html#projets", text: t("← Retour aux projets") }),
+      el("p", { class: "eyebrow", text: [p.phare ? t("Projet phare") : t("Projet"), p.periode].filter(Boolean).join(" · ") }),
       el("div", { class: "phare-tete" }, [
         el("div", null, [
           p.logo ? el("h1", { class: "logo-titre" }, [el("img", { src: url(p.logo), alt: p.titre })])
@@ -301,16 +356,16 @@
     }
 
     if (p.points && p.points.length) {
-      corps.appendChild(el("section", { class: "detail-section" }, [el("h2", { text: "Points clés" }), puces(p.points)]));
+      corps.appendChild(el("section", { class: "detail-section" }, [el("h2", { text: t("Points clés") }), puces(p.points)]));
     }
     if (p.chaine && p.chaine.length) {
-      corps.appendChild(el("p", { class: "cote", text: "Chaîne de traitement" }));
+      corps.appendChild(el("p", { class: "cote", text: t("Chaîne de traitement") }));
       corps.appendChild(el("ol", { class: "chaine" }, p.chaine.map(function (c) {
         return el("li", null, [el("b", { text: c.etape }), el("span", { text: c.detail })]);
       })));
     }
     if (p.versions && p.versions.length) {
-      corps.appendChild(el("p", { class: "cote", text: "Versions" }));
+      corps.appendChild(el("p", { class: "cote", text: t("Versions") }));
       corps.appendChild(el("div", { class: "versions" }, p.versions.map(function (v) {
         return el("article", { class: "version" }, [
           el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
@@ -319,15 +374,15 @@
       })));
     }
     if (p.objectifs && p.objectifs.length) {
-      corps.appendChild(el("p", { class: "cote", text: "Objectifs" }));
+      corps.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
       corps.appendChild(el("ol", { class: "objectifs" }, p.objectifs.map(function (o) { return el("li", { text: o }); })));
     }
 
     // Projet précédent / suivant
     var prec = projets[(idx - 1 + projets.length) % projets.length], suiv = projets[(idx + 1) % projets.length];
     if (projets.length > 1) corps.appendChild(el("nav", { class: "suite", "aria-label": "Autres projets" }, [
-      el("a", { href: lienProjet(prec) }, [el("span", { class: "k mono", text: "← Précédent" }), el("b", { text: prec.titre })]),
-      el("a", { href: lienProjet(suiv), class: "droite" }, [el("span", { class: "k mono", text: "Suivant →" }), el("b", { text: suiv.titre })])
+      el("a", { href: lienProjet(prec) }, [el("span", { class: "k mono", text: t("← Précédent") }), el("b", { text: prec.titre })]),
+      el("a", { href: lienProjet(suiv), class: "droite" }, [el("span", { class: "k mono", text: t("Suivant →") }), el("b", { text: suiv.titre })])
     ]));
     main.appendChild(corps);
   }
@@ -338,11 +393,11 @@
   function cell(k, v, cls) { return el("td", { class: cls || null }, [el("span", { class: "k", text: k }), typeof v === "string" ? document.createTextNode(v) : v]); }
   $("cartouche").appendChild(el("tbody", null, [
     el("tr", null, [
-      cell("Titre", el("span", { class: "titre-c", text: "Portfolio" }), "large"),
-      cell("Auteur", nomComplet),
-      cell("Établissement", ID.ecole || ""),
-      cell("Révision", P.miseAJour || P.Update || ""),
-      cell("Feuille", feuille)
+      cell(t("Titre"), el("span", { class: "titre-c", text: t("Portfolio") }), "large"),
+      cell(t("Auteur"), nomComplet),
+      cell(t("Établissement"), ID.ecole || ""),
+      cell(t("Révision"), P.miseAJour || P.Update || ""),
+      cell(t("Feuille"), feuille)
     ])
   ]));
 

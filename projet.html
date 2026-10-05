@@ -13,18 +13,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="projet">
-  <a class="skip" href="#contenu">Aller au contenu</a>
+  <a class="skip" href="#contenu" data-t>Aller au contenu</a>
 
   <header class="nav">
     <div class="wrap nav-in">
       <a class="nav-nom" href="index.html" id="nav-nom">Antoine</a>
       <nav aria-label="Sections">
         <a href="index.html#phare">S.T.A.R.</a>
-        <a href="index.html#projets">Projets</a>
-        <a href="index.html#competences">Compétences</a>
-        <a href="index.html#parcours">Parcours</a>
-        <a href="index.html#contact">Contact</a>
+        <a href="index.html#projets" data-t>Projets</a>
+        <a href="index.html#competences" data-t>Compétences</a>
+        <a href="index.html#parcours" data-t>Parcours</a>
+        <a href="index.html#contact" data-t>Contact</a>
       </nav>
+      <button class="langue mono" id="langue" type="button"><span data-l="fr">FR</span><span class="sep" aria-hidden="true">/</span><span data-l="en">EN</span></button>
     </div>
   </header>
 
@@ -35,7 +36,7 @@
   </footer>
 
   <dialog id="visionneuse" aria-label="Image agrandie">
-    <button class="fermer" id="fermer" aria-label="Fermer">✕</button>
+    <button class="fermer" id="fermer" aria-label="Close">✕</button>
     <img id="visionneuse-img" alt="">
     <p id="visionneuse-leg"></p>
   </dialog>

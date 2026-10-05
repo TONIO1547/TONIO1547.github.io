@@ -13,18 +13,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="accueil">
-  <a class="skip" href="#contenu">Aller au contenu</a>
+  <a class="skip" href="#contenu" data-t>Aller au contenu</a>
 
   <header class="nav">
     <div class="wrap nav-in">
       <a class="nav-nom" href="#haut" id="nav-nom">Antoine</a>
       <nav aria-label="Sections">
         <a href="#phare">S.T.A.R.</a>
-        <a href="#projets">Projets</a>
-        <a href="#competences">Compétences</a>
-        <a href="#parcours">Parcours</a>
-        <a href="#contact">Contact</a>
+        <a href="#projets" data-t>Projets</a>
+        <a href="#competences" data-t>Compétences</a>
+        <a href="#parcours" data-t>Parcours</a>
+        <a href="#contact" data-t>Contact</a>
       </nav>
+      <button class="langue mono" id="langue" type="button"><span data-l="fr">FR</span><span class="sep" aria-hidden="true">/</span><span data-l="en">EN</span></button>
     </div>
   </header>
 
@@ -45,31 +46,31 @@
 
     <section class="wrap bloc" id="projets" aria-labelledby="projets-titre">
       <div class="bloc-tete">
-        <h2 id="projets-titre">Autres projets</h2>
-        <p class="bloc-sous">Électronique, cartes sur mesure et premiers robots.</p>
+        <h2 id="projets-titre" data-t>Autres projets</h2>
+        <p class="bloc-sous" data-t>Électronique, cartes sur mesure et premiers robots.</p>
       </div>
       <div class="grille-projets" id="liste-projets"></div>
     </section>
 
     <section class="wrap bloc" id="competences" aria-labelledby="comp-titre">
       <div class="bloc-tete">
-        <h2 id="comp-titre">Compétences</h2>
-        <p class="bloc-sous">Ce que j'ai mis en pratique sur mes projets.</p>
+        <h2 id="comp-titre" data-t>Compétences</h2>
+        <p class="bloc-sous" data-t>Ce que j'ai mis en pratique sur mes projets.</p>
       </div>
       <div class="grille-comp" id="liste-comp"></div>
     </section>
 
     <section class="wrap bloc" id="parcours" aria-labelledby="parcours-titre">
       <div class="bloc-tete">
-        <h2 id="parcours-titre">Parcours</h2>
+        <h2 id="parcours-titre" data-t>Parcours</h2>
       </div>
       <ol class="parcours" id="liste-parcours"></ol>
     </section>
 
     <section class="wrap bloc contact" id="contact" aria-labelledby="contact-titre">
       <div class="bloc-tete">
-        <h2 id="contact-titre">Contact</h2>
-        <p class="bloc-sous">Stage, projet, question sur S.T.A.R. : écrivez-moi.</p>
+        <h2 id="contact-titre" data-t>Contact</h2>
+        <p class="bloc-sous" data-t>Stage, projet, question sur S.T.A.R. : écrivez-moi.</p>
       </div>
       <div class="contact-in" id="contact-in"></div>
     </section>
@@ -80,7 +81,7 @@
   </footer>
 
   <dialog id="visionneuse" aria-label="Image agrandie">
-    <button class="fermer" id="fermer" aria-label="Fermer">✕</button>
+    <button class="fermer" id="fermer" aria-label="Close">✕</button>
     <img id="visionneuse-img" alt="">
     <p id="visionneuse-leg"></p>
   </dialog>
