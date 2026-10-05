@@ -50,7 +50,8 @@
       document.body.prepend(d);
     });
   </script>
-  <script src="contenu.js"></script>
+  <!-- contenu.js est rechargé à chaque visite (pas de cache), pour que tes modifications se voient tout de suite -->
+  <script>document.write('<script src="contenu.js?v=' + Date.now() + '"><\/script>');</script>
   <script src="app.js"></script>
 </body>
 </html>
