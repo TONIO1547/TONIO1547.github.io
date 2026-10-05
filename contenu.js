@@ -44,7 +44,7 @@ window.PORTFOLIO = {
     photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
   },
 
-  miseAJour: "Octobre 2026",
+  Update: "10/2026",
 
   /* ---------- Projets ----------
      phare: true  → le projet est mis en avant en grand en haut de la page (un seul).
@@ -84,11 +84,11 @@ window.PORTFOLIO = {
           // Écris ton texte entre les guillemets de  texte: "" . Tant qu'il est vide, rien ne s'affiche.
           demos: [
             {
-              texte: "",   // ← ton texte sur la détection
+              texte: "Premier essaie pour la detection de drone par IA sur un modele finne-tunner base sur YOLOv5n.",   // ← ton texte sur la détection
               media: { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg", legende: "Détection du drone en direct sur les deux caméras" }
             },
             {
-              texte: "",   // ← ton texte sur le suivi
+              texte: "Test de suivi en vue de regler le PID de maniere iterative dans le but d avoir le tracking le plus fluide possible.",   // ← ton texte sur le suivi
               media: { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg", legende: "La tourelle suit le drone (PID) et le pointe au laser" }
             }
           ]
@@ -101,7 +101,8 @@ window.PORTFOLIO = {
             "Jetson Orin NX 16 Go",
             "Caméra ELP AR0234 à obturateur global (USB 3.0) + objectif 8 mm, caméra thermique",
             "Moteurs gimbal CubeMars GL60-II (azimut) et GL40-II (site), pilotés par cartes FOC MKS",
-            "Application d'alerte : flux des caméras et rapport d'incident en direct"
+            "Application d'alerte : flux des caméras et rapport d'incident en direct",
+            "Fusion de Capteurs avec camera + radar de vitesse pour detection dans toutes les conditions ."
           ]
         }
       ],
@@ -155,21 +156,6 @@ window.PORTFOLIO = {
     },
 
     {
-      id: "pixy2",
-      titre: "Tourelle pan-tilt avec Pixy2",
-      periode: "Avant S.T.A.R.",
-      statut: "Terminé",
-      resume: "Premier système de suivi : une caméra Pixy2 repère un objet par sa couleur et un ESP32 oriente la tourelle pour le garder au centre. Le point de départ de S.T.A.R.",
-      points: [
-        "Détection par blobs de couleur",
-        "Asservissement des servos en PD / PID sur ESP32"
-      ],
-      tags: ["ESP32", "Pixy2", "Servos", "PID"],
-      liens: [],
-      medias: []
-    },
-
-    {
       id: "sumo",
       titre: "Robot sumo et suiveur de ligne",
       periode: "Terminale SI",
@@ -188,10 +174,10 @@ window.PORTFOLIO = {
   /* ---------- Compétences ---------- */
   competences: [
     { domaine: "Vision & IA",          items: ["YOLO (entraînement, fine-tuning)", "TensorRT", "NMS et post-traitement", "Métriques mAP / IoU"] },
-    { domaine: "Systèmes embarqués",   items: ["ESP32 / ESP8266", "Arduino", "NVIDIA Jetson", "SPI, UDP", "Linux, systemd"] },
-    { domaine: "Électronique & PCB",   items: ["KiCad", "Alimentations buck / LDO", "USB-C Power Delivery", "Protections TVS, CEM"] },
+    { domaine: "Systèmes embarqués",   items: ["ESP32 ", "Arduino", "NVIDIA Jetson", "SPI, UDP", "Linux"] },
+    { domaine: "Électronique & PCB",   items: ["KiCad", "Alimentations buck / LDO", "USB-C Power Delivery", "Placements composants","Carte de puissance"] },
     { domaine: "Asservissement",       items: ["PID / PD", "Moteurs brushless, commande FOC", "Filtrage", "Servomoteurs"] },
-    { domaine: "Mécanique & CAO",      items: ["SolidWorks", "Conception de tourelle 2 axes", "Prototypage"] },
+    { domaine: "Mécanique & CAO",      items: ["SolidWorks", "Fusion360", "Prototypage"] },
     { domaine: "Logiciel",             items: ["Python", "C / C++ (Arduino, ESP32)", "Flask", "HTML / JavaScript", "Git"] }
   ],
 
@@ -203,5 +189,4 @@ window.PORTFOLIO = {
     { periode: "Lycée", titre: "Baccalauréat, spécialité Sciences de l'ingénieur", lieu: "", detail: "Projets en équipe de trois, souvent en tant que chef de projet." }
   ],
 
-  divers: ["Permis B"]
-};
+  divers: ["Permis B","SNEE"]
