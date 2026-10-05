@@ -32,14 +32,14 @@ window.PORTFOLIO = {
   /* ---------- Toi ---------- */
   identite: {
     prenom: "Antoine",
-    nom: "",                       // ← ajoute ton nom de famille ici
+    nom: "Pelissier",                       // ← ajoute ton nom de famille ici
     titre: "Étudiant ingénieur en robotique autonome",
     ecole: "Polytech Nice Sophia",
     accroche: "Je conçois des robots qui voient, décident et bougent : vision par ordinateur, électronique embarquée, cartes électroniques et CAO mécanique.",
     disponibilite: "Ouvert aux stages en robotique et systèmes embarqués",
     email: "tonio.74370@gmail.com",
     github: "https://github.com/TONIO1547",
-    linkedin: "",                  // ← colle l'URL de ton profil LinkedIn si tu en as un
+    linkedin: "www.linkedin.com/in/antoine-pelissier1",                  // ← colle l'URL de ton profil LinkedIn si tu en as un
     cv: "",                        // ← ex. "media/CV_Antoine.pdf" après l'avoir déposé dans media/
     photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
   },
