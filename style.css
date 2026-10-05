@@ -361,3 +361,10 @@ main .eyebrow, main .sous, main .dispo, main .bloc-sous, main .cote, main figcap
 .stage-label { position: absolute; inset: auto 0 50% 0; text-align: center; font-size: 12px; letter-spacing: .06em; color: #8fc9ee; pointer-events: none; }
 .cadre-modele3d .type { background: rgba(7, 16, 26, .75); color: #cfe9fb; }
 footer.pied { padding-block: 64px 0; }
+
+/* Accueil : photo unique du projet phare */
+.photo-phare { width: min(520px, 100%); margin: 36px auto 0; }
+.photo-phare .cadre { aspect-ratio: 1257 / 1400; }
+.photo-phare figcaption { text-align: center; }
+.phare-centre .pied-phare { justify-content: center; flex-direction: column; gap: 18px; }
+.phare-centre .pied-phare .tags { justify-content: center; }

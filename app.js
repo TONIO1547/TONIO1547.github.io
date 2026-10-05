@@ -203,26 +203,10 @@
         el("ol", { class: "objectifs" }, phare.objectifs.map(function (o) { return el("li", { text: o }); }))
       ]));
     }
-    var g = galerie(phare.medias, chemin);
-    if (g) { w.appendChild(el("p", { class: "cote", text: t("Images et vidéos") })); w.appendChild(g); }
-
-    if (phare.chaine && phare.chaine.length) {
-      w.appendChild(el("p", { class: "cote", text: t("Chaîne de traitement") }));
-      w.appendChild(el("ol", { class: "chaine" }, phare.chaine.map(function (c) {
-        return el("li", null, [el("b", { text: c.etape }), el("span", { text: c.detail })]);
-      })));
-    }
-    if (phare.versions && phare.versions.length) {
-      w.appendChild(el("p", { class: "cote", text: t("Versions") }));
-      w.appendChild(el("div", { class: "versions" }, phare.versions.map(function (v) {
-        return el("article", { class: "version" }, [
-          el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
-          puces(v.points),
-          liens(v.liens),
-          galerie(v.medias),
-          demos(v.demos)
-        ]);
-      })));
+    // Accueil : une seule photo, tout le reste est sur la page détaillée
+    if (phare.photoAccueil) {
+      var ph = media({ type: "image", src: phare.photoAccueil, legende: phare.legendePhotoAccueil });
+      if (ph) { ph.classList.add("photo-phare"); w.appendChild(ph); }
     }
     w.appendChild(el("div", { class: "pied-phare" }, [tags(phare.tags), el("div", { class: "liens" }, [
       el("a", { class: "btn plein", href: lienProjet(phare), text: t("Page détaillée du projet →") }),

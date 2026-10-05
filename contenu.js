@@ -79,7 +79,9 @@ window.PORTFOLIO = {
       phare: true,
       titre: "S.T.A.R.",
       sousTitre: "Sentinel Track Alert Report",
-      logo: "media/logo.png",   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
+      logo: "media/logo.png",
+      photoAccueil: "media/robot_complet.jpg",   // ← seule photo de S.T.A.R. affichée en page d'accueil
+      legendePhotoAccueil: { fr: "La V1 de S.T.A.R.", en: "S.T.A.R. V1" },   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
       periode: { fr: "Projet personnel", en: "Personal project" },
       statut: "En cours",
       resume: {
