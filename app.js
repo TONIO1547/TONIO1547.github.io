@@ -189,6 +189,7 @@
   else {
     var chemin = "projets[" + iPhare + "]";
     var w = el("div", { class: "wrap" });
+    w.className = "wrap phare-centre";
     w.appendChild(el("p", { class: "eyebrow", text: t("Projet phare") + (phare.periode ? " · " + phare.periode : "") }));
     w.appendChild(el("div", { class: "phare-tete" }, [
       el("div", null, [
@@ -197,7 +198,6 @@
           : el("h2", { id: "phare-titre", text: phare.titre }),
         phare.sousTitre ? el("p", { class: "sous", text: phare.sousTitre }) : null
       ]),
-      badge(phare.statut)
     ]));
     w.appendChild(el("p", { class: "phare-resume", text: phare.resume || "" }));
 
@@ -320,7 +320,7 @@
     feuille = (idx + 2) + " / " + (projets.length + 1);
     document.title = p.titre + " — " + nomComplet;
 
-    var tete = el("header", { class: "detail-tete wrap" }, [
+    var tete = el("header", { class: "detail-tete wrap" + (p.phare ? " phare-centre" : "") }, [
       el("a", { class: "retour mono", href: p.phare ? "index.html#phare" : "index.html#projets", text: t("← Retour aux projets") }),
       el("p", { class: "eyebrow", text: [p.phare ? t("Projet phare") : t("Projet"), p.periode].filter(Boolean).join(" · ") }),
       el("div", { class: "phare-tete" }, [
@@ -329,7 +329,7 @@
                  : el("h1", { class: "detail-titre", text: p.titre }),
           p.sousTitre ? el("p", { class: "sous mono", text: p.sousTitre }) : null
         ]),
-        badge(p.statut)
+        p.phare ? null : badge(p.statut)
       ]),
       p.resume ? el("p", { class: "phare-resume", text: p.resume }) : null,
       el("div", { class: "pied-phare" }, [tags(p.tags), liens(p.liens)])
