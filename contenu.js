@@ -344,10 +344,7 @@ The wedge shape at the front is meant to slide under the opponent to lift and pu
           texte: {
             fr: "Une première version du robot, avec un autre châssis et des boîtes de moteurs imprimées, a précédé la version finale. Les roues motrices ont elles aussi été retravaillées plusieurs fois pour s'adapter aux moteurs et à l'impression.",
             en: "A first version of the robot, with a different chassis and printed motor housings, came before the final one. The drive wheels were also reworked several times to fit the motors and the printing process."
-          },
-          medias: [
-            { type: "image", src: "media/sumo_roue_motrice.png", legende: { fr: "Roue motrice, version finale", en: "Drive wheel, final version" } }
-          ]
+          }
         },
         {
           titre: { fr: "Électronique et capteurs", en: "Electronics and sensors" },
