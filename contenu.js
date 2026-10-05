@@ -343,6 +343,4 @@ On S.T.A.R., the board measures the position of the tilt axis. That position is 
       lieu: "",
       detail: { fr: "Projets en équipe de trois, souvent en tant que chef de projet.", en: "Team projects in groups of three, often as project lead." } }
   ],
-
-  divers: [{ fr: "Permis B", en: "Driving licence (B)" }, { fr: "SNEE", en: "Student-entrepreneur status (SNEE)" }]
 };
