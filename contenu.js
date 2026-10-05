@@ -346,8 +346,7 @@ The wedge shape at the front is meant to slide under the opponent to lift and pu
             en: "A first version of the robot, with a different chassis and printed motor housings, came before the final one. The drive wheels were also reworked several times to fit the motors and the printing process."
           },
           medias: [
-            { type: "image", src: "media/sumo_roue_motrice.png", legende: { fr: "Roue motrice, version finale", en: "Drive wheel, final version" } },
-            { type: "image", src: "media/sumo_chassis_v1.png", legende: { fr: "Châssis de la première version", en: "Chassis of the first version" } }
+            { type: "image", src: "media/sumo_roue_motrice.png", legende: { fr: "Roue motrice, version finale", en: "Drive wheel, final version" } }
           ]
         },
         {
