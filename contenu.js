@@ -214,21 +214,26 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
           ]
         },
         {
-          titre: { fr: "2. Placement des composants sur la PCB", en: "2. Placing components on the PCB" },
-          texte: {
-            fr: "Le capteur est placé au centre de la carte, face à l'aimant. Le connecteur est sur un bord pour faciliter le câblage, et quatre trous de fixation aux coins permettent de monter la carte sur la tourelle. Les condensateurs de découplage sont au plus près des broches qu'ils alimentent.",
-            en: "The sensor sits in the middle of the board, facing the magnet. The connector is on one edge to make wiring easy, and four mounting holes in the corners let the board be fixed to the turret. Decoupling capacitors are placed as close as possible to the pins they supply."
-          },
+          // Étapes 2 et 3 regroupées face à la même image (champ blocs)
+          blocs: [
+            {
+              titre: { fr: "2. Placement des composants sur la PCB", en: "2. Placing components on the PCB" },
+              texte: {
+                fr: "Le capteur est placé au centre de la carte, face à l'aimant. Le connecteur est sur un bord pour faciliter le câblage, et quatre trous de fixation aux coins permettent de monter la carte sur la tourelle. Les condensateurs de découplage sont au plus près des broches qu'ils alimentent.",
+                en: "The sensor sits in the middle of the board, facing the magnet. The connector is on one edge to make wiring easy, and four mounting holes in the corners let the board be fixed to the turret. Decoupling capacitors are placed as close as possible to the pins they supply."
+              }
+            },
+            {
+              titre: { fr: "3. Routage", en: "3. Routing" },
+              texte: {
+                fr: "Les quatre lignes SPI (CSN, CLK, MISO, MOSI) partent du connecteur, passent par leurs résistances série puis rejoignent le capteur. Les pistes d'alimentation 5 V et 3,3 V sont plus larges que les pistes de signal pour limiter les chutes de tension.",
+                en: "The four SPI lines (CSN, CLK, MISO, MOSI) run from the connector through their series resistors to the sensor. The 5 V and 3.3 V power tracks are wider than the signal tracks to limit voltage drop."
+              }
+            }
+          ],
           medias: [
             { type: "image", src: "media/encodeur_schem.png", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
           ]
-        },
-        {
-          titre: { fr: "3. Routage", en: "3. Routing" },
-          texte: {
-            fr: "Sur l'image ci-dessus, les quatre lignes SPI (CSN, CLK, MISO, MOSI) partent du connecteur, passent par leurs résistances série puis rejoignent le capteur. Les pistes d'alimentation 5 V et 3,3 V sont plus larges que les pistes de signal pour limiter les chutes de tension.",
-            en: "In the image above, the four SPI lines (CSN, CLK, MISO, MOSI) run from the connector through their series resistors to the sensor. The 5 V and 3.3 V power tracks are wider than the signal tracks to limit voltage drop."
-          }
         },
         {
           titre: { fr: "4. Intégration dans le projet", en: "4. Integration into the project" },

@@ -329,3 +329,5 @@ main .eyebrow, main .sous, main .dispo, main .bloc-sous, main .cote, main figcap
 .demo.cote-a-cote { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: clamp(20px, 3vw, 40px); align-items: center; }
 .demo.cote-a-cote .media { max-width: none; }
 @media (max-width: 860px) { .demo.cote-a-cote { grid-template-columns: minmax(0, 1fr); } }
+.detail-section.groupe .sec-texte > h2:not(:first-child) { margin-top: 18px; }
+.sec-texte > h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; font-stretch: 112%; }

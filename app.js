@@ -346,10 +346,20 @@
     // Sections libres écrites par toi (champ details)
     (p.details || []).forEach(function (sec, k) {
       var gm = galerie(sec.medias, chemin + ".details[" + k + "]");
-      if (!sec.texte && !gm && !(sec.points && sec.points.length)) return;
-      corps.appendChild(el("section", { class: "detail-section" + (gm ? " avec-media" : "") }, [
-        sec.titre ? el("h2", { text: sec.titre }) : null,
-        el("div", { class: "sec-texte" }, [el("div", { class: "detail-texte" }, paragraphes(sec.texte)), puces(sec.points)].filter(Boolean)),
+      // Une section peut regrouper plusieurs blocs de texte (champ blocs) face à la même image
+      var blocs = (sec.blocs && sec.blocs.length) ? sec.blocs : [sec];
+      var gauche = [];
+      blocs.forEach(function (b, n) {
+        if (!b.texte && !(b.points && b.points.length)) return;
+        if (sec.blocs && b.titre) gauche.push(el("h2", { text: b.titre }));
+        gauche.push(el("div", { class: "detail-texte" }, paragraphes(b.texte)));
+        if (b.points && b.points.length) gauche.push(puces(b.points));
+      });
+      if (!gauche.length && !gm) return;
+      var plusieurs = !!(sec.blocs && sec.blocs.length);
+      corps.appendChild(el("section", { class: "detail-section" + (gm ? " avec-media" : "") + (plusieurs ? " groupe" : "") }, [
+        (!plusieurs && sec.titre) ? el("h2", { text: sec.titre }) : null,
+        el("div", { class: "sec-texte" }, gauche),
         gm ? el("div", { class: "sec-media" }, [gm]) : null
       ].filter(Boolean)));
     });
@@ -357,7 +367,7 @@
       corps.appendChild(el("div", { class: "emplacement", text: "Texte détaillé → contenu.js, " + chemin + ".details : écris tes sections (exemple en haut du fichier)." }));
     }
 
-    var aDuTexte = (p.details || []).some(function (d) { return d.texte; });
+    var aDuTexte = (p.details || []).some(function (d) { return d.texte || (d.blocs && d.blocs.length); });
     if (p.points && p.points.length && !aDuTexte) {
       corps.appendChild(el("section", { class: "detail-section" }, [el("h2", { text: t("Points clés") }), puces(p.points)]));
     }
