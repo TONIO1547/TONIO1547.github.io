@@ -31,7 +31,7 @@
       { type: "image",    src: "media/photo.jpg",    legende: { fr: "…", en: "…" } },
       { type: "video",    src: "media/suivi.mp4",    legende: { fr: "…", en: "…" }, poster: "media/suivi.jpg" },
       { type: "youtube",  id: "ID_DE_LA_VIDEO",      legende: { fr: "…", en: "…" } },
-      { type: "modele3d", src: "media/tourelle.glb", legende: { fr: "…", en: "…" } },
+      { type: "modele3d", src: "media/tourelle.glb", legende: { fr: "…", en: "…" }, rotation: 90 },  ← rotation : 90 ou 0 selon l'export
 
    Dans  medias  d'un projet, le PREMIER média est l'image principale :
    c'est aussi lui qui s'affiche sur la carte du projet en page d'accueil.
@@ -107,7 +107,17 @@ window.PORTFOLIO = {
             { fr: "Réglage des PID pan / tilt avec filtre passe-bas", en: "Pan / tilt PID tuning with a low-pass filter" },
             { fr: "ESP32 piloté en UDP, interface web Flask (flux caméra + commande moteurs) lancée en service systemd", en: "ESP32 driven over UDP, Flask web interface (camera stream + motor control) running as a systemd service" }
           ],
-          // Démonstrations de la V1 : chaque bloc = ton texte, puis la vidéo en dessous.
+          // Liens propres à la V1 (affichés sous la liste)
+          liens: [
+            { texte: { fr: "Code de la V1 sur GitHub", en: "V1 code on GitHub" }, url: "https://github.com/TONIO1547/STAR" }
+          ],
+          // Photo et modèle 3D de la V1
+          medias: [
+            { type: "image", src: "media/robot_complet.jpg", legende: { fr: "Le robot V1 complet", en: "The complete V1 robot" } },
+            { type: "modele3d", src: "media/modele_v1.glb", rotation: 90,
+              legende: { fr: "Modèle 3D de la V1 : clique et fais glisser pour tourner autour", en: "3D model of V1: click and drag to orbit around it" } }
+          ],
+          // Démonstrations de la V1 : chaque bloc = ton texte, puis la vidéo à côté.
           demos: [
             {
               texte: {
@@ -124,6 +134,14 @@ window.PORTFOLIO = {
               },
               media: { type: "video", src: "media/demo_tracking.mp4",
                        legende: { fr: "La tourelle suit le drone (PID) et le pointe au laser", en: "The turret tracks the drone (PID) and points the laser at it" } }
+            },
+            {
+              texte: {
+                fr: "Vidéo de fonctionnement : vue de la caméra de la tourelle pendant qu'elle détecte et suit le drone en continu.",
+                en: "Operating video: the turret camera's view while it continuously detects and tracks the drone."
+              },
+              media: { type: "video", src: "media/tracking_V1.mp4",
+                       legende: { fr: "La V1 en fonctionnement", en: "V1 in operation" } }
             }
           ]
         },

@@ -341,3 +341,23 @@ main .eyebrow, main .sous, main .dispo, main .bloc-sous, main .cote, main figcap
 .phare-centre .logo-titre img { margin-inline: auto; }
 .phare-centre .phare-resume { margin-inline: auto; text-align: center; hyphens: manual; }
 .phare-centre .retour { justify-self: start; }
+
+/* V1 : lien GitHub, photo et modèle 3D */
+.version .liens { margin-top: 16px; }
+.version > .medias { margin-top: 22px; }
+.version .medias.deux .cadre { aspect-ratio: 1; }
+.version .cadre-modele3d { background: var(--surface); }
+
+/* V1 : lien GitHub, photo et modèle 3D */
+.version .liens { margin-top: 16px; }
+.version > .medias { margin-top: 22px; }
+.version .medias.deux .cadre { aspect-ratio: 1; }
+
+/* Vue 3D (même ambiance que star-ai.fr) */
+.media .cadre-modele3d { background: radial-gradient(120% 90% at 50% 20%, #10263a 0%, #07101a 70%); border-color: #17334a; }
+.stage-3d { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+.stage-3d:active { cursor: grabbing; }
+.stage-3d canvas { width: 100% !important; height: 100% !important; display: block; }
+.stage-label { position: absolute; inset: auto 0 50% 0; text-align: center; font-size: 12px; letter-spacing: .06em; color: #8fc9ee; pointer-events: none; }
+.cadre-modele3d .type { background: rgba(7, 16, 26, .75); color: #cfe9fb; }
+footer.pied { padding-block: 64px 0; }

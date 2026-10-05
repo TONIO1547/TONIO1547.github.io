@@ -40,7 +40,7 @@
     "Projet introuvable": "Project not found", "Ce projet n'existe pas ou son id a changé.": "This project does not exist or its id has changed.",
     "← Tous les projets": "← All projects", "Autres projets du portfolio": "Other projects",
     "Terminé": "Completed", "En cours": "In progress", "Prototype": "Prototype",
-    "Vidéo": "Video", "3D · fais tourner": "3D · drag to rotate", "Agrandir : ": "Enlarge: ", "Fermer": "Close"
+    "Vidéo": "Video", "3D · cliquer-glisser pour tourner": "3D · drag to rotate", "Chargement du modèle 3D…": "Loading 3D model…", "Modèle 3D indisponible": "3D model unavailable", "Affichage 3D indisponible sur cet appareil": "3D view not available on this device", "Agrandir : ": "Enlarge: ", "Fermer": "Close"
   };
   function t(fr) { return LANG === "en" ? (EN[fr] || fr) : fr; }
   [].forEach.call(document.querySelectorAll("[data-t]"), function (n) { n.textContent = t(n.textContent.trim()); });
@@ -91,18 +91,10 @@
   }
 
   /* ---------- Médias : image, vidéo, YouTube, modèle 3D ---------- */
-  var modelViewerCharge = false;
-  function chargerModelViewer() {
-    if (modelViewerCharge) return; modelViewerCharge = true;
-    var s = document.createElement("script");
-    s.type = "module";
-    s.src = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
-    document.head.appendChild(s);
-  }
   function url(u) { return u ? encodeURI(u) : u; }
   function media(m) {
     var cadre = el("div", { class: "cadre cadre-" + m.type });
-    var etiquette = { image: null, video: t("Vidéo"), youtube: t("Vidéo"), modele3d: t("3D · fais tourner") }[m.type];
+    var etiquette = { image: null, video: t("Vidéo"), youtube: t("Vidéo"), modele3d: t("3D · cliquer-glisser pour tourner") }[m.type];
     if (m.type === "image") {
       var btn = el("button", { class: "zoom", type: "button", "aria-label": t("Agrandir : ") + (m.legende || "image") }, [
         el("img", { src: url(m.src), alt: m.legende || "", loading: "lazy" })
@@ -120,11 +112,16 @@
       }));
       etiquette = null;
     } else if (m.type === "modele3d") {
-      chargerModelViewer();
-      cadre.appendChild(el("model-viewer", {
-        src: url(m.src), poster: url(m.poster), alt: m.legende || "Modèle 3D",
-        "camera-controls": "", "auto-rotate": "", "shadow-intensity": "1", "interaction-prompt": "none", loading: "lazy"
-      }));
+      // Vue 3D three.js (même rendu que star-ai.fr) : clic-glisser pour tourner autour
+      var lbl = el("span", { class: "stage-label mono", text: t("Chargement du modèle 3D…") });
+      var stage = el("div", { class: "stage-3d", role: "img", "aria-label": m.legende || "Modèle 3D" }, [lbl]);
+      cadre.appendChild(stage);
+      import("./vendor/viewer3d.js?v=" + (window.V || "")).then(function (mod) {
+        mod.monterModele3D(stage, lbl, url(m.src), {
+          rotation: m.rotation, dracoPath: "vendor/draco/",
+          textes: { chargement: t("Chargement du modèle 3D…"), erreur: t("Modèle 3D indisponible"), indispo: t("Affichage 3D indisponible sur cet appareil") }
+        });
+      }).catch(function () { lbl.textContent = t("Modèle 3D indisponible"); });
     } else return null;
     if (etiquette) cadre.appendChild(el("span", { class: "type", text: etiquette }));
     return el("figure", { class: "media" }, [cadre, m.legende ? el("figcaption", { text: m.legende }) : null]);
@@ -162,7 +159,6 @@
 
   var nomComplet = [ID.prenom, ID.nom].filter(Boolean).join(" ");
   $("nav-nom").textContent = nomComplet;
-  var feuille = "1 / " + (projets.length + 1);
 
   /* ================= ACCUEIL ================= */
   function pageAccueil() {
@@ -222,6 +218,8 @@
         return el("article", { class: "version" }, [
           el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
           puces(v.points),
+          liens(v.liens),
+          galerie(v.medias),
           demos(v.demos)
         ]);
       })));
@@ -312,7 +310,6 @@
       return;
     }
     var p = projets[idx], chemin = "projets[" + idx + "]";
-    feuille = (idx + 2) + " / " + (projets.length + 1);
     document.title = p.titre + " — " + nomComplet;
 
     var tete = el("header", { class: "detail-tete wrap" + (p.phare ? " phare-centre" : "") }, [
@@ -382,7 +379,7 @@
       corps.appendChild(el("div", { class: "versions" }, p.versions.map(function (v) {
         return el("article", { class: "version" }, [
           el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
-          puces(v.points), demos(v.demos)
+          puces(v.points), liens(v.liens), galerie(v.medias), demos(v.demos)
         ]);
       })));
     }
@@ -396,17 +393,5 @@
   }
 
   if (PAGE === "projet") pageProjet(); else pageAccueil();
-
-  /* ---------- Cartouche ---------- */
-  function cell(k, v, cls) { return el("td", { class: cls || null }, [el("span", { class: "k", text: k }), typeof v === "string" ? document.createTextNode(v) : v]); }
-  $("cartouche").appendChild(el("tbody", null, [
-    el("tr", null, [
-      cell(t("Titre"), el("span", { class: "titre-c", text: t("Portfolio") }), "large"),
-      cell(t("Auteur"), nomComplet),
-      cell(t("Établissement"), ID.ecole || ""),
-      cell(t("Révision"), P.miseAJour || P.Update || ""),
-      cell(t("Feuille"), feuille)
-    ])
-  ]));
 
 })();

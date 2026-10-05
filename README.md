@@ -57,6 +57,9 @@ Le premier média de la liste est l'image principale du projet.
 - Vidéos : `.mp4` (H.264), moins de 50 Mo. Plus lourd → YouTube (`type: "youtube"`, l'id est la partie après `v=` dans le lien).
 - Modèles 3D : `.glb`, idéalement moins de 10 Mo.
 
+### Modèle 3D
+La vue 3D est la même que sur star-ai.fr (three.js) : on tourne autour en cliquant-glissant, molette pour zoomer après un clic. Si le modèle apparaît couché, change `rotation: 90` en `rotation: 0` dans `contenu.js`.
+
 ### Exporter un modèle SolidWorks en .glb
 SolidWorks n'exporte pas directement en `.glb`. Le plus simple :
 1. Dans SolidWorks : **Fichier → Enregistrer sous → STL** (ou `.step`), en résolution « fine ».
@@ -71,4 +74,6 @@ SolidWorks n'exporte pas directement en `.glb`. Le plus simple :
 | `index.html` | Structure de la page d'accueil |
 | `projet.html` | Structure des pages projet |
 | `style.css` | Mise en forme (couleurs en haut du fichier) |
-| `app.js` | Construit la page à partir de `contenu.js` + animation du viseur |
+| `app.js` | Construit la page à partir de `contenu.js` |
+| `vendor/` | Vue 3D compilée (three.js) et décodeur Draco |
+| `outils/` | Source de la vue 3D |
