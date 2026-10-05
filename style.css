@@ -256,3 +256,38 @@ dialog#visionneuse p { font: 400 13px/1.4 var(--f-mono); text-align: center; mar
 .demo { display: grid; gap: 12px; }
 .demo-texte { max-width: 68ch; font-size: 16px; white-space: pre-line; }
 .demo .media { max-width: 860px; }
+
+/* ---------- Page d'un projet ---------- */
+.page-projet { padding-block: clamp(28px, 5vw, 56px) 0; }
+.detail-tete { display: grid; gap: 0; }
+.retour { font-size: 13px; text-decoration: none; margin-bottom: 28px; justify-self: start; }
+.retour:hover { text-decoration: underline; }
+.detail-tete .eyebrow { margin-bottom: 12px; }
+.detail-titre { font-size: clamp(40px, 7vw, 84px); font-weight: 900; font-stretch: 118%; letter-spacing: -.02em; line-height: .95; }
+.detail-tete .sous { font-size: clamp(14px, 1.6vw, 17px); color: var(--gris); margin-top: 12px; }
+.detail-tete .pied-phare { margin-top: 24px; padding-bottom: 32px; border-bottom: 1px solid var(--encre); }
+.detail-corps { display: grid; gap: 40px; padding-top: 40px; }
+.detail-corps > .cote { margin-block: 8px -22px; }
+.detail-section { display: grid; gap: 14px; }
+.detail-section h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; font-stretch: 112%; }
+.detail-texte { display: grid; gap: 12px; max-width: 70ch; font-size: 17px; }
+.detail-texte p, .demo-texte p { white-space: pre-line; }
+.demo-texte { display: grid; gap: 10px; }
+.suite { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.suite a { display: grid; gap: 6px; padding: 18px 20px; border: 1px solid var(--trait); background: var(--surface); border-radius: 4px; text-decoration: none; color: var(--encre); min-width: 0; }
+.suite a:hover { border-color: var(--accent); }
+.suite .droite { text-align: right; }
+.suite .k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.suite b { font: 700 18px/1.25 var(--f-titre); font-stretch: 108%; }
+@media (max-width: 560px) { .suite { grid-template-columns: minmax(0, 1fr); } .suite .droite { text-align: left; } }
+
+/* Liens vers les pages projet depuis l'accueil */
+.titre-lien { color: inherit; text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 2px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .2s; }
+.titre-lien:hover, .titre-lien:focus-visible { background-size: 100% 2px; color: var(--accent); }
+.voir { font: 500 13px/1.3 var(--f-mono); align-self: flex-start; text-decoration: none; }
+.voir:hover { text-decoration: underline; }
+.pied-phare .liens { align-items: center; }
+
+/* Message d'erreur si contenu.js est mal écrit */
+.erreur-contenu { position: sticky; top: 0; z-index: 30; background: #b3261e; color: #fff; padding: 12px var(--gout); font: 500 14px/1.4 var(--f-mono); }
+@media (min-width: 1000px) { .grille-projets.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

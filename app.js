@@ -2,9 +2,16 @@
 (function () {
   "use strict";
   var P = window.PORTFOLIO;
-  if (!P) { document.body.insertAdjacentHTML("afterbegin", "<p style='padding:16px;color:#c00'>Erreur dans contenu.js : vérifie les virgules et les guillemets autour de la dernière modification.</p>"); return; }
+  if (!P) return; // l'erreur de contenu.js est déjà affichée en haut de la page (voir index.html)
   var ID = P.identite || {};
   var EDITION = location.hash === "#edition";
+  var PAGE = document.body.getAttribute("data-page") || "accueil";
+  var projets = P.projets || [];
+  function lienProjet(p) { return "projet.html?id=" + encodeURIComponent(p.id || ""); }
+  function paragraphes(texte, cls) {
+    if (!texte) return [];
+    return String(texte).trim().split(/\n\s*\n/).map(function (t) { return el("p", { class: cls || null, text: t.trim() }); });
+  }
 
   /* ---------- Petit utilitaire pour créer des éléments ---------- */
   function el(tag, attrs, enfants) {
@@ -81,7 +88,7 @@
       var m = d.media ? media(d.media) : null;
       if (!d.texte && !m) return null;
       return el("div", { class: "demo" }, [
-        d.texte ? el("p", { class: "demo-texte", text: d.texte }) :
+        d.texte ? el("div", { class: "demo-texte" }, paragraphes(d.texte)) :
           (EDITION ? el("div", { class: "emplacement", text: "Texte à écrire → contenu.js, champ texte de cette démo." }) : null),
         m
       ]);
@@ -98,10 +105,14 @@
   $("fermer").addEventListener("click", function () { dlg.close(); });
   dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
 
-  /* ---------- Hero ---------- */
   var nomComplet = [ID.prenom, ID.nom].filter(Boolean).join(" ");
-  document.title = nomComplet + " — Robotique";
   $("nav-nom").textContent = nomComplet;
+  var feuille = "1 / " + (projets.length + 1);
+
+  /* ================= ACCUEIL ================= */
+  function pageAccueil() {
+  document.title = nomComplet + " — Robotique";
+  /* ---------- Hero ---------- */
   $("h-ecole").textContent = ID.ecole || "";
   var h1 = $("h-nom"); h1.textContent = ID.prenom || "";
   if (ID.nom) h1.appendChild(el("span", { class: "nom-fam", text: ID.nom }));
@@ -116,7 +127,6 @@
   if (ID.linkedin) act.appendChild(el("a", { class: "btn", href: ID.linkedin, target: "_blank", rel: "noopener", text: "LinkedIn ↗" }));
 
   /* ---------- Projet phare ---------- */
-  var projets = P.projets || [];
   var iPhare = projets.findIndex(function (p) { return p.phare; });
   var phare = projets[iPhare];
   var secPhare = $("phare");
@@ -161,7 +171,10 @@
         el("ol", { class: "objectifs" }, phare.objectifs.map(function (o) { return el("li", { text: o }); }))
       ]));
     }
-    w.appendChild(el("div", { class: "pied-phare" }, [tags(phare.tags), liens(phare.liens)]));
+    w.appendChild(el("div", { class: "pied-phare" }, [tags(phare.tags), el("div", { class: "liens" }, [
+      el("a", { class: "btn plein", href: lienProjet(phare), text: "Page détaillée du projet →" }),
+      liens(phare.liens)
+    ])]));
     secPhare.appendChild(w);
   }
 
@@ -170,16 +183,18 @@
   projets.forEach(function (p, i) {
     if (p.phare) return;
     liste.appendChild(el("article", { class: "projet", id: p.id || null }, [
-      galerie(p.medias, "projets[" + i + "]"),
+      (p.medias && p.medias.length) ? galerie([p.medias[0]]) : null,
       el("div", { class: "projet-meta" }, [el("span", { text: p.periode || "" }), badge(p.statut)]),
-      el("h3", { text: p.titre }),
+      el("h3", null, [el("a", { class: "titre-lien", href: lienProjet(p), text: p.titre })]),
       p.resume ? el("p", { text: p.resume }) : null,
       puces(p.points),
-      liens(p.liens),
-      tags(p.tags)
+      tags(p.tags),
+      el("a", { class: "voir", href: lienProjet(p), text: "Voir le projet →" })
     ]));
   });
   if (!liste.children.length) $("projets").remove();
+  var nb = liste.children.length;
+  if (nb === 3 || nb === 5 || nb === 6 || nb > 7) liste.classList.add("trois");
 
   /* ---------- Compétences ---------- */
   var comp = $("liste-comp");
@@ -230,6 +245,95 @@
     ]));
   }
 
+  }
+
+  /* ================= PAGE D'UN PROJET (projet.html?id=...) ================= */
+  function pageProjet() {
+    var id = new URLSearchParams(location.search).get("id");
+    var idx = projets.findIndex(function (p) { return p.id === id; });
+    var main = $("contenu");
+    if (idx < 0) {
+      document.title = "Projet introuvable — " + nomComplet;
+      main.appendChild(el("section", { class: "wrap bloc" }, [
+        el("h1", { class: "detail-titre", text: "Projet introuvable" }),
+        el("p", { class: "bloc-sous", text: "Ce projet n'existe pas ou son id a changé." }),
+        el("p", null, [el("a", { class: "btn", href: "index.html#projets", text: "← Tous les projets" })])
+      ]));
+      return;
+    }
+    var p = projets[idx], chemin = "projets[" + idx + "]";
+    feuille = (idx + 2) + " / " + (projets.length + 1);
+    document.title = p.titre + " — " + nomComplet;
+
+    var tete = el("header", { class: "detail-tete wrap" }, [
+      el("a", { class: "retour mono", href: p.phare ? "index.html#phare" : "index.html#projets", text: "← Retour aux projets" }),
+      el("p", { class: "eyebrow", text: [p.phare ? "Projet phare" : "Projet", p.periode].filter(Boolean).join(" · ") }),
+      el("div", { class: "phare-tete" }, [
+        el("div", null, [
+          p.logo ? el("h1", { class: "logo-titre" }, [el("img", { src: url(p.logo), alt: p.titre })])
+                 : el("h1", { class: "detail-titre", text: p.titre }),
+          p.sousTitre ? el("p", { class: "sous mono", text: p.sousTitre }) : null
+        ]),
+        badge(p.statut)
+      ]),
+      p.resume ? el("p", { class: "phare-resume", text: p.resume }) : null,
+      el("div", { class: "pied-phare" }, [tags(p.tags), liens(p.liens)])
+    ]);
+    main.appendChild(tete);
+
+    var corps = el("div", { class: "wrap detail-corps" });
+    var g = galerie(p.medias, chemin);
+    if (g) corps.appendChild(g);
+
+    // Sections libres écrites par toi (champ details)
+    (p.details || []).forEach(function (sec, k) {
+      var gm = galerie(sec.medias, chemin + ".details[" + k + "]");
+      if (!sec.texte && !gm && !(sec.points && sec.points.length)) return;
+      corps.appendChild(el("section", { class: "detail-section" }, [
+        sec.titre ? el("h2", { text: sec.titre }) : null,
+        el("div", { class: "detail-texte" }, paragraphes(sec.texte)),
+        puces(sec.points),
+        gm
+      ].filter(Boolean)));
+    });
+    if (EDITION && !(p.details || []).some(function (d) { return d.texte; })) {
+      corps.appendChild(el("div", { class: "emplacement", text: "Texte détaillé → contenu.js, " + chemin + ".details : écris tes sections (exemple en haut du fichier)." }));
+    }
+
+    if (p.points && p.points.length) {
+      corps.appendChild(el("section", { class: "detail-section" }, [el("h2", { text: "Points clés" }), puces(p.points)]));
+    }
+    if (p.chaine && p.chaine.length) {
+      corps.appendChild(el("p", { class: "cote", text: "Chaîne de traitement" }));
+      corps.appendChild(el("ol", { class: "chaine" }, p.chaine.map(function (c) {
+        return el("li", null, [el("b", { text: c.etape }), el("span", { text: c.detail })]);
+      })));
+    }
+    if (p.versions && p.versions.length) {
+      corps.appendChild(el("p", { class: "cote", text: "Versions" }));
+      corps.appendChild(el("div", { class: "versions" }, p.versions.map(function (v) {
+        return el("article", { class: "version" }, [
+          el("div", { class: "version-tete" }, [el("h3", { text: v.nom }), badge(v.statut)]),
+          puces(v.points), demos(v.demos)
+        ]);
+      })));
+    }
+    if (p.objectifs && p.objectifs.length) {
+      corps.appendChild(el("p", { class: "cote", text: "Objectifs" }));
+      corps.appendChild(el("ol", { class: "objectifs" }, p.objectifs.map(function (o) { return el("li", { text: o }); })));
+    }
+
+    // Projet précédent / suivant
+    var prec = projets[(idx - 1 + projets.length) % projets.length], suiv = projets[(idx + 1) % projets.length];
+    if (projets.length > 1) corps.appendChild(el("nav", { class: "suite", "aria-label": "Autres projets" }, [
+      el("a", { href: lienProjet(prec) }, [el("span", { class: "k mono", text: "← Précédent" }), el("b", { text: prec.titre })]),
+      el("a", { href: lienProjet(suiv), class: "droite" }, [el("span", { class: "k mono", text: "Suivant →" }), el("b", { text: suiv.titre })])
+    ]));
+    main.appendChild(corps);
+  }
+
+  if (PAGE === "projet") pageProjet(); else pageAccueil();
+
   /* ---------- Cartouche ---------- */
   function cell(k, v, cls) { return el("td", { class: cls || null }, [el("span", { class: "k", text: k }), typeof v === "string" ? document.createTextNode(v) : v]); }
   $("cartouche").appendChild(el("tbody", null, [
@@ -237,8 +341,8 @@
       cell("Titre", el("span", { class: "titre-c", text: "Portfolio" }), "large"),
       cell("Auteur", nomComplet),
       cell("Établissement", ID.ecole || ""),
-      cell("Révision", P.miseAJour || ""),
-      cell("Feuille", "1 / 1")
+      cell("Révision", P.miseAJour || P.Update || ""),
+      cell("Feuille", feuille)
     ])
   ]));
 

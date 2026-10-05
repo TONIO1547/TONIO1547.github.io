@@ -20,7 +20,21 @@
       { type: "youtube",  id: "dQw4w9WgXcQ",         legende: "Démo complète" },
       { type: "modele3d", src: "media/tourelle.glb", legende: "Modèle CAO (fais-le tourner)", poster: "media/tourelle.jpg" },
 
-   Le PREMIER média de la liste sert d'image principale du projet.
+   Le PREMIER média de la liste sert d'image principale du projet
+   (c'est aussi lui qui s'affiche sur la carte du projet en page d'accueil).
+
+   PAGE DÉTAILLÉE D'UN PROJET : chaque projet a sa propre page (clic sur son titre).
+   Le texte de cette page se trouve dans  details: [ ... ]  du projet, découpé en sections :
+
+      details: [
+        { titre: "Pourquoi cette carte", texte: "Ton texte ici." },
+        { titre: "Conception", texte: `Pour un long texte, mets-le entre accents graves (AltGr + 7)
+          au lieu des guillemets : tu peux alors aller à la ligne et écrire des "guillemets" librement.` },
+        { titre: "Résultats", texte: "…", medias: [ { type: "image", src: "media/resultat.jpg", legende: "…" } ] }
+      ],
+
+   Une section dont le texte est vide n'apparaît pas. Laisse une ligne vide dans
+   ton texte pour commencer un nouveau paragraphe.
    - Images : .jpg / .png / .webp — vise moins de 1 Mo (redimensionne à ~1600 px de large).
    - Vidéos : .mp4 (H.264), moins de 50 Mo. Au-delà, mets-la sur YouTube et utilise type "youtube"
      (l'id est la partie après  v=  dans le lien YouTube).
@@ -44,7 +58,7 @@ window.PORTFOLIO = {
     photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
   },
 
-  Update: "10/2026",
+  miseAJour: "10/2026",
 
   /* ---------- Projets ----------
      phare: true  → le projet est mis en avant en grand en haut de la page (un seul).
@@ -84,11 +98,11 @@ window.PORTFOLIO = {
           // Écris ton texte entre les guillemets de  texte: "" . Tant qu'il est vide, rien ne s'affiche.
           demos: [
             {
-              texte: "Premier essaie pour la detection de drone par IA sur un modele finne-tunner base sur YOLOv5n.",   // ← ton texte sur la détection
+              texte: "Premier essai de détection de drone par IA, avec un modèle YOLOv5n que j'ai fine-tuné.",   // ← ton texte sur la détection
               media: { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg", legende: "Détection du drone en direct sur les deux caméras" }
             },
             {
-              texte: "Test de suivi en vue de regler le PID de maniere iterative dans le but d avoir le tracking le plus fluide possible.",   // ← ton texte sur le suivi
+              texte: "Test de suivi pour régler le PID de manière itérative, dans le but d'obtenir le tracking le plus fluide possible.",   // ← ton texte sur le suivi
               media: { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg", legende: "La tourelle suit le drone (PID) et le pointe au laser" }
             }
           ]
@@ -102,7 +116,7 @@ window.PORTFOLIO = {
             "Caméra ELP AR0234 à obturateur global (USB 3.0) + objectif 8 mm, caméra thermique",
             "Moteurs gimbal CubeMars GL60-II (azimut) et GL40-II (site), pilotés par cartes FOC MKS",
             "Application d'alerte : flux des caméras et rapport d'incident en direct",
-            "Fusion de Capteurs avec camera + radar de vitesse pour detection dans toutes les conditions ."
+            "Fusion de capteurs caméra + radar de vitesse pour une détection dans toutes les conditions"
           ]
         }
       ],
@@ -117,6 +131,15 @@ window.PORTFOLIO = {
       liens: [
         { texte: "Site du projet", url: "https://www.star-ai.fr" }
         // { texte: "Code sur GitHub", url: "https://github.com/TONIO1547/STAR" },  ← à activer si tu rends le dépôt public
+      ],
+      // Texte de la page détaillée (une section vide n'apparaît pas)
+      details: [
+        { titre: "Le problème", texte: "" },
+        { titre: "Conception mécanique", texte: "" },
+        { titre: "Électronique et motorisation", texte: "" },
+        { titre: "Vision et IA", texte: "" },
+        { titre: "Logiciel et application", texte: "" },
+        { titre: "Résultats et prochaines étapes", texte: "" }
       ],
       medias: [
         // Médias généraux du projet (affichés après le résumé) : photos, modèle 3D de la tourelle…
@@ -136,6 +159,13 @@ window.PORTFOLIO = {
       ],
       tags: ["KiCad", "SPI", "PCB"],
       liens: [],
+      // Texte de la page détaillée (une section vide n'apparaît pas)
+      details: [
+        { titre: "Pourquoi cette carte", texte: "" },
+        { titre: "Schéma et choix des composants", texte: "" },
+        { titre: "Routage", texte: "" },
+        { titre: "Fabrication et tests", texte: "" }
+      ],
       medias: []
     },
 
@@ -152,6 +182,13 @@ window.PORTFOLIO = {
       ],
       tags: ["KiCad", "ESP32-S3", "Alimentation", "USB-C"],
       liens: [],
+      // Texte de la page détaillée (une section vide n'apparaît pas)
+      details: [
+        { titre: "Pourquoi cette carte", texte: "" },
+        { titre: "Schéma et choix des composants", texte: "" },
+        { titre: "Routage", texte: "" },
+        { titre: "Fabrication et tests", texte: "" }
+      ],
       medias: []
     },
 
@@ -167,6 +204,13 @@ window.PORTFOLIO = {
       ],
       tags: ["Arduino", "Travail en équipe"],
       liens: [],
+      // Texte de la page détaillée (une section vide n'apparaît pas)
+      details: [
+        { titre: "Le défi", texte: "" },
+        { titre: "Conception du robot", texte: "" },
+        { titre: "Mon rôle dans l'équipe", texte: "" },
+        { titre: "Résultat", texte: "" }
+      ],
       medias: []
     }
   ],
@@ -174,7 +218,7 @@ window.PORTFOLIO = {
   /* ---------- Compétences ---------- */
   competences: [
     { domaine: "Vision & IA",          items: ["YOLO (entraînement, fine-tuning)", "TensorRT", "NMS et post-traitement", "Métriques mAP / IoU"] },
-    { domaine: "Systèmes embarqués",   items: ["ESP32 ", "Arduino", "NVIDIA Jetson", "SPI, UDP", "Linux"] },
+    { domaine: "Systèmes embarqués",   items: ["ESP32", "Arduino", "NVIDIA Jetson", "SPI, UDP", "Linux"] },
     { domaine: "Électronique & PCB",   items: ["KiCad", "Alimentations buck / LDO", "USB-C Power Delivery", "Placements composants","Carte de puissance"] },
     { domaine: "Asservissement",       items: ["PID / PD", "Moteurs brushless, commande FOC", "Filtrage", "Servomoteurs"] },
     { domaine: "Mécanique & CAO",      items: ["SolidWorks", "Fusion360", "Prototypage"] },
@@ -190,3 +234,4 @@ window.PORTFOLIO = {
   ],
 
   divers: ["Permis B","SNEE"]
+};

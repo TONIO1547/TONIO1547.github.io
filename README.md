@@ -14,6 +14,15 @@ Depuis github.com :
 
 Si la page affiche « Erreur dans contenu.js », il manque en général une virgule ou un guillemet dans ta dernière modification.
 
+## Page détaillée d'un projet
+
+Chaque projet a sa propre page (clic sur son titre en page d'accueil), à l'adresse `projet.html?id=…`.
+Son texte se trouve dans le champ `details` du projet, dans `contenu.js` : une liste de sections avec un titre, un texte et éventuellement des médias. Une section dont le texte est vide n'apparaît pas.
+
+Pour un long texte, mets-le entre accents graves (`AltGr + 7`) au lieu des guillemets : tu peux aller à la ligne et écrire des "guillemets" librement. Une ligne vide = nouveau paragraphe.
+
+Si `contenu.js` contient une faute de frappe, une barre rouge en haut du site indique la ligne en cause.
+
 ## Ajouter une photo, une vidéo ou un modèle 3D
 
 1. Ouvre le dossier `media/` → **Add file → Upload files** → dépose ton fichier → **Commit changes**.
@@ -48,6 +57,7 @@ SolidWorks n'exporte pas directement en `.glb`. Le plus simple :
 |---|---|
 | `contenu.js` | Tout le contenu — **le fichier à modifier** |
 | `media/` | Photos, vidéos, modèles 3D, CV |
-| `index.html` | Structure de la page |
+| `index.html` | Structure de la page d'accueil |
+| `projet.html` | Structure des pages projet |
 | `style.css` | Mise en forme (couleurs en haut du fichier) |
 | `app.js` | Construit la page à partir de `contenu.js` + animation du viseur |
