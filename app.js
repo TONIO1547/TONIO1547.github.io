@@ -337,7 +337,10 @@
     main.appendChild(tete);
 
     var corps = el("div", { class: "wrap detail-corps" });
-    var g = galerie(p.medias, chemin);
+    // Les médias principaux déjà montrés dans une section ne sont pas répétés en haut de la page
+    var dejaVus = {};
+    (p.details || []).forEach(function (d) { (d.medias || []).forEach(function (m) { if (m.src) dejaVus[m.src] = 1; }); });
+    var g = galerie((p.medias || []).filter(function (m) { return !dejaVus[m.src]; }), chemin);
     if (g) corps.appendChild(g);
 
     // Sections libres écrites par toi (champ details)
@@ -355,7 +358,8 @@
       corps.appendChild(el("div", { class: "emplacement", text: "Texte détaillé → contenu.js, " + chemin + ".details : écris tes sections (exemple en haut du fichier)." }));
     }
 
-    if (p.points && p.points.length) {
+    var aDuTexte = (p.details || []).some(function (d) { return d.texte; });
+    if (p.points && p.points.length && !aDuTexte) {
       corps.appendChild(el("section", { class: "detail-section" }, [el("h2", { text: t("Points clés") }), puces(p.points)]));
     }
     if (p.chaine && p.chaine.length) {

@@ -176,9 +176,9 @@ window.PORTFOLIO = {
         en: "Sensor board that measures the angular position of a magnet at all times, for FOC control of brushless motors and for monitoring the tilt axis of S.T.A.R. Designed in KiCad."
       },
       points: [
-        { fr: "Liaison SPI avec résistances série sur les lignes", en: "SPI link with series resistors on the lines" },
-        { fr: "Régulation par LDO MCP1700", en: "MCP1700 LDO regulation" },
-        { fr: "Protection TVS et filtrage CEM par ferrite", en: "TVS protection and ferrite EMC filtering" }
+        { fr: "Encodeur magnétique AS5047P lu en SPI", en: "AS5047P magnetic encoder read over SPI" },
+        { fr: "Régulateur LDO TLV75733 (5 V → 3,3 V)", en: "TLV75733 LDO regulator (5 V → 3.3 V)" },
+        { fr: "Protection ESD ESDS304 et résistances série sur le bus SPI", en: "ESDS304 ESD protection and series resistors on the SPI bus" }
       ],
       tags: ["KiCad", "SPI", "PCB", "FOC"],
       liens: [],
@@ -196,24 +196,52 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
           }
         },
         {
-          titre: { fr: "Son rôle dans S.T.A.R.", en: "Its role in S.T.A.R." },
+          titre: { fr: "1. Choix des composants selon les besoins", en: "1. Choosing components from the requirements" },
           texte: {
-            fr: `Sur la tourelle, la carte mesure la position de l'axe tilt. Cette position est ainsi connue de deux manières indépendantes : par le moteur gimbal GL40 et par cet encodeur.
-
-Croiser les deux mesures apporte une meilleure précision, et permet de détecter puis de corriger les données si l'un des capteurs se met à dériver ou à renvoyer des valeurs aberrantes.`,
-            en: `On the turret, the board measures the position of the tilt axis. That position is therefore known in two independent ways: through the GL40 gimbal motor and through this encoder.
-
-Cross-checking both measurements improves accuracy, and makes it possible to detect and correct the data if one sensor starts drifting or returning outliers.`
+            fr: "Les besoins : lire la position de l'aimant en SPI, s'alimenter en 5 V depuis le contrôleur, et rester fiable près des moteurs et de leurs câbles, qui génèrent beaucoup de bruit électrique. Chaque composant répond à l'un de ces besoins :",
+            en: "The requirements: read the magnet position over SPI, run from the controller's 5 V supply, and stay reliable next to motors and their cables, which generate a lot of electrical noise. Each component answers one of these needs:"
+          },
+          points: [
+            { fr: "Capteur AS5047P : encodeur magnétique 14 bits sans contact, lu en SPI", en: "AS5047P sensor: 14-bit contactless magnetic encoder, read over SPI" },
+            { fr: "Régulateur LDO TLV75733 : abaisse le 5 V en un 3,3 V propre pour le capteur", en: "TLV75733 LDO regulator: turns the 5 V supply into a clean 3.3 V for the sensor" },
+            { fr: "Protection ESD ESDS304 sur les quatre lignes SPI", en: "ESDS304 ESD protection on the four SPI lines" },
+            { fr: "Résistances série de 22 Ω sur le bus SPI et résistance de tirage 10 kΩ sur CSN", en: "22 Ω series resistors on the SPI bus and a 10 kΩ pull-up on CSN" },
+            { fr: "Drivers de LED AL5809 à courant constant : une LED d'alimentation, une LED d'activité", en: "AL5809 constant-current LED drivers: one power LED, one activity LED" },
+            { fr: "Condensateurs de découplage 100 nF et 1 µF sur chaque alimentation", en: "100 nF and 1 µF decoupling capacitors on every supply" }
+          ],
+          medias: [
+            { type: "image", src: "media/encodeur_schem_raw.png", legende: { fr: "Schéma électrique de la carte (KiCad)", en: "Board schematic (KiCad)" } }
+          ]
+        },
+        {
+          titre: { fr: "2. Placement des composants sur la PCB", en: "2. Placing components on the PCB" },
+          texte: {
+            fr: "Le capteur est placé au centre de la carte, face à l'aimant. Le connecteur est sur un bord pour faciliter le câblage, et quatre trous de fixation aux coins permettent de monter la carte sur la tourelle. Les condensateurs de découplage sont au plus près des broches qu'ils alimentent.",
+            en: "The sensor sits in the middle of the board, facing the magnet. The connector is on one edge to make wiring easy, and four mounting holes in the corners let the board be fixed to the turret. Decoupling capacitors are placed as close as possible to the pins they supply."
+          },
+          medias: [
+            { type: "image", src: "media/encodeur_schem.png", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
+          ]
+        },
+        {
+          titre: { fr: "3. Routage", en: "3. Routing" },
+          texte: {
+            fr: "Sur l'image ci-dessus, les quatre lignes SPI (CSN, CLK, MISO, MOSI) partent du connecteur, passent par leurs résistances série puis rejoignent le capteur. Les pistes d'alimentation 5 V et 3,3 V sont plus larges que les pistes de signal pour limiter les chutes de tension.",
+            en: "In the image above, the four SPI lines (CSN, CLK, MISO, MOSI) run from the connector through their series resistors to the sensor. The 5 V and 3.3 V power tracks are wider than the signal tracks to limit voltage drop."
           }
         },
         {
-          titre: { fr: "Routage", en: "PCB layout" },
+          titre: { fr: "4. Intégration dans le projet", en: "4. Integration into the project" },
           texte: {
-            fr: "Bus SPI (CSN, CLK, MISO, MOSI) protégé par des résistances série, alimentation 5 V régulée en 3,3 V, LED d'alimentation et de données.",
-            en: "SPI bus (CSN, CLK, MISO, MOSI) protected by series resistors, 5 V supply regulated down to 3.3 V, power and data LEDs."
+            fr: `Le modèle 3D de la carte, exporté de KiCad, sert à l'intégrer dans la CAO de la tourelle et à vérifier l'encombrement et les fixations.
+
+Sur S.T.A.R., la carte mesure la position de l'axe tilt. Cette position est ainsi connue de deux manières indépendantes : par le moteur gimbal GL40 et par cet encodeur. Croiser les deux mesures apporte une meilleure précision, et permet de détecter puis de corriger les données si l'un des capteurs se met à dériver ou à renvoyer des valeurs aberrantes.`,
+            en: `The board's 3D model, exported from KiCad, is used to fit it into the turret CAD and to check clearances and mounting.
+
+On S.T.A.R., the board measures the position of the tilt axis. That position is therefore known in two independent ways: through the GL40 gimbal motor and through this encoder. Cross-checking both measurements improves accuracy, and makes it possible to detect and correct the data if one sensor starts drifting or returning outliers.`
           },
           medias: [
-            { type: "image", src: "media/encodeur_schem.png", legende: { fr: "Routage de la carte sous KiCad", en: "Board layout in KiCad" } }
+            { type: "image", src: "media/encodeur.png", legende: { fr: "Modèle 3D de la carte (KiCad)", en: "3D model of the board (KiCad)" } }
           ]
         },
         { titre: { fr: "Fabrication et tests", en: "Manufacturing and testing" }, texte: { fr: "", en: "" } }
