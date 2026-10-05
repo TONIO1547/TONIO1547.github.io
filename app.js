@@ -251,15 +251,6 @@
   var nb = liste.children.length;
   if (nb === 3 || nb === 5 || nb === 6 || nb > 7) liste.classList.add("trois");
 
-  /* ---------- Compétences ---------- */
-  var comp = $("liste-comp");
-  (P.competences || []).forEach(function (c) {
-    comp.appendChild(el("div", { class: "comp" }, [el("h3", { text: c.domaine }), el("ul", null, c.items.map(function (t) { return el("li", { text: t }); }))]));
-  });
-  if (P.divers && P.divers.length) {
-    comp.parentNode.appendChild(el("p", { class: "divers mono", text: t("Divers") + " · " + P.divers.join(" · ") }));
-  }
-
   /* ---------- Parcours ---------- */
   var parc = $("liste-parcours");
   (P.parcours || []).forEach(function (e) {
@@ -272,6 +263,10 @@
       ])
     ]));
   });
+
+  if (P.divers && P.divers.length) {
+    parc.parentNode.appendChild(el("p", { class: "divers mono", text: t("Divers") + " · " + P.divers.join(" · ") }));
+  }
 
   /* ---------- Contact ---------- */
   var ci = $("contact-in");
