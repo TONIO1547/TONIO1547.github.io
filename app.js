@@ -142,7 +142,7 @@
     return el("div", { class: "demos" }, liste.map(function (d) {
       var m = d.media ? media(d.media) : null;
       if (!d.texte && !m) return null;
-      return el("div", { class: "demo" }, [
+      return el("div", { class: "demo" + (d.texte && m ? " cote-a-cote" : "") }, [
         d.texte ? el("div", { class: "demo-texte" }, paragraphes(d.texte)) :
           (EDITION ? el("div", { class: "emplacement", text: "Texte à écrire → contenu.js, champ texte de cette démo." }) : null),
         m
@@ -347,11 +347,10 @@
     (p.details || []).forEach(function (sec, k) {
       var gm = galerie(sec.medias, chemin + ".details[" + k + "]");
       if (!sec.texte && !gm && !(sec.points && sec.points.length)) return;
-      corps.appendChild(el("section", { class: "detail-section" }, [
+      corps.appendChild(el("section", { class: "detail-section" + (gm ? " avec-media" : "") }, [
         sec.titre ? el("h2", { text: sec.titre }) : null,
-        el("div", { class: "detail-texte" }, paragraphes(sec.texte)),
-        puces(sec.points),
-        gm
+        el("div", { class: "sec-texte" }, [el("div", { class: "detail-texte" }, paragraphes(sec.texte)), puces(sec.points)].filter(Boolean)),
+        gm ? el("div", { class: "sec-media" }, [gm]) : null
       ].filter(Boolean)));
     });
     if (EDITION && !(p.details || []).some(function (d) { return d.texte; })) {

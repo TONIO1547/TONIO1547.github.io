@@ -307,3 +307,25 @@ dialog#visionneuse p { font: 400 13px/1.4 var(--f-mono); text-align: center; mar
 .detail-corps .medias:not(.multi):not(.deux) .media { max-width: 820px; }
 .phare-tete .badge { justify-self: end; align-self: end; }
 @media (max-width: 800px) { .phare-tete .badge { justify-self: start; } }
+
+/* Texte justifié sur tout le site */
+main p, main .puces li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+main .eyebrow, main .sous, main .dispo, main .bloc-sous, main .cote, main figcaption { text-align: left; hyphens: manual; }
+
+/* Pages projet : texte à gauche, images à droite */
+.detail-section.avec-media { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(24px, 4vw, 48px); align-items: start; }
+.detail-section.avec-media > h2 { grid-column: 1 / -1; }
+.sec-texte { display: grid; gap: 14px; min-width: 0; }
+.detail-section.avec-media .detail-texte { max-width: none; }
+.sec-media { min-width: 0; position: sticky; top: 72px; }
+.detail-corps .sec-media .media { max-width: none; }
+.detail-corps .sec-media .cadre-image img { width: 100%; max-height: 75vh; }
+@media (max-width: 860px) {
+  .detail-section.avec-media { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
+  .sec-media { position: static; }
+}
+
+/* Démos S.T.A.R. : texte à gauche, vidéo à droite */
+.demo.cote-a-cote { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: clamp(20px, 3vw, 40px); align-items: center; }
+.demo.cote-a-cote .media { max-width: none; }
+@media (max-width: 860px) { .demo.cote-a-cote { grid-template-columns: minmax(0, 1fr); } }
