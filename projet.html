@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="style.css">
+  <!-- Les fichiers du site sont rechargés à chaque visite, pour que les modifications se voient tout de suite -->
+  <script>window.V = Date.now(); document.write('<link rel="stylesheet" href="style.css?v=' + window.V + '">');</script>
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body data-page="projet">
   <a class="skip" href="#contenu" data-t>Aller au contenu</a>
@@ -52,7 +54,7 @@
     });
   </script>
   <!-- contenu.js est rechargé à chaque visite (pas de cache), pour que tes modifications se voient tout de suite -->
-  <script>document.write('<script src="contenu.js?v=' + Date.now() + '"><\/script>');</script>
-  <script src="app.js"></script>
+  <script>document.write('<script src="contenu.js?v=' + window.V + '"><\/script>');</script>
+  <script>document.write('<script src="app.js?v=' + window.V + '"><\/script>');</script>
 </body>
 </html>
