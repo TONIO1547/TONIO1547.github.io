@@ -201,6 +201,12 @@
     ]));
     w.appendChild(el("p", { class: "phare-resume", text: phare.resume || "" }));
 
+    if (phare.objectifs && phare.objectifs.length) {
+      w.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
+      w.appendChild(el("div", { class: "objectifs-wrap" }, [
+        el("ol", { class: "objectifs" }, phare.objectifs.map(function (o) { return el("li", { text: o }); }))
+      ]));
+    }
     var g = galerie(phare.medias, chemin);
     if (g) { w.appendChild(el("p", { class: "cote", text: t("Images et vidéos") })); w.appendChild(g); }
 
@@ -219,12 +225,6 @@
           demos(v.demos)
         ]);
       })));
-    }
-    if (phare.objectifs && phare.objectifs.length) {
-      w.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
-      w.appendChild(el("div", { class: "objectifs-wrap" }, [
-        el("ol", { class: "objectifs" }, phare.objectifs.map(function (o) { return el("li", { text: o }); }))
-      ]));
     }
     w.appendChild(el("div", { class: "pied-phare" }, [tags(phare.tags), el("div", { class: "liens" }, [
       el("a", { class: "btn plein", href: lienProjet(phare), text: t("Page détaillée du projet →") }),
@@ -337,6 +337,11 @@
     main.appendChild(tete);
 
     var corps = el("div", { class: "wrap detail-corps" });
+    if (p.objectifs && p.objectifs.length) {
+      corps.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
+      corps.appendChild(el("ol", { class: "objectifs" }, p.objectifs.map(function (o) { return el("li", { text: o }); })));
+    }
+
     // Les médias principaux déjà montrés dans une section ne sont pas répétés en haut de la page
     var dejaVus = {};
     (p.details || []).forEach(function (d) { (d.medias || []).forEach(function (m) { if (m.src) dejaVus[m.src] = 1; }); });
@@ -386,11 +391,6 @@
         ]);
       })));
     }
-    if (p.objectifs && p.objectifs.length) {
-      corps.appendChild(el("p", { class: "cote", text: t("Objectifs") }));
-      corps.appendChild(el("ol", { class: "objectifs" }, p.objectifs.map(function (o) { return el("li", { text: o }); })));
-    }
-
     // Projet précédent / suivant
     var prec = projets[(idx - 1 + projets.length) % projets.length], suiv = projets[(idx + 1) % projets.length];
     if (projets.length > 1) corps.appendChild(el("nav", { class: "suite", "aria-label": "Autres projets" }, [
