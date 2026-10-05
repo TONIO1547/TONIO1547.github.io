@@ -76,7 +76,7 @@ p { margin: 0; }
 
 /* ---------- Hero ---------- */
 .hero {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
   gap: clamp(28px, 5vw, 64px); align-items: center;
   padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 96px);
 }
@@ -102,11 +102,11 @@ p { margin: 0; }
 .btn.plein { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn.plein:hover { background: var(--encre); border-color: var(--encre); color: var(--papier); }
 
-.photo { width: min(320px, 100%); aspect-ratio: 1; object-fit: cover; border-radius: 4px; border: 1px solid var(--trait); justify-self: end; }
+.photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; border-radius: 4px; border: 1px solid var(--trait); justify-self: end; }
 
 /* ---------- Projet phare ---------- */
 .phare { background: var(--surface); border-block: 1px solid var(--trait); padding-block: clamp(48px, 7vw, 96px); }
-.phare-tete { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: end; }
+.phare-tete { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 16px 32px; align-items: end; }
 .phare h2 { font-size: clamp(64px, 13vw, 168px); font-weight: 900; font-stretch: 125%; letter-spacing: -.03em; line-height: .85; }
 .logo-titre { line-height: 0; }
 .logo-titre img { width: min(384px, 100%); height: auto; border-radius: 6px; background: #070d14; }
@@ -244,7 +244,7 @@ dialog#visionneuse p { font: 400 13px/1.4 var(--f-mono); text-align: center; mar
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: minmax(0, 1fr); }
-  .photo { justify-self: start; width: min(200px, 100%); }
+  .photo { justify-self: start; width: min(420px, 100%); }
 }
 .divers { margin-top: 14px; font-size: 13px; color: var(--gris); }
 .phare .eyebrow { margin-bottom: 16px; }

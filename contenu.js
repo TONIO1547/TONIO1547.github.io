@@ -64,7 +64,7 @@ window.PORTFOLIO = {
     github: "https://github.com/TONIO1547",
     linkedin: "https://www.linkedin.com/in/antoine-pelissier1",
     cv: "media/CV-1.pdf",          // ← tu peux mettre un CV différent par langue : { fr: "media/CV-1.pdf", en: "media/CV-en.pdf" }
-    photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
+    photo: "media/photo.jpg"       // ← photo affichée en haut de la page d'accueil
   },
 
   miseAJour: "10/2026",
