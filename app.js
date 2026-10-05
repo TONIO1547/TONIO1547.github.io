@@ -37,17 +37,18 @@
     s.src = "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js";
     document.head.appendChild(s);
   }
+  function url(u) { return u ? encodeURI(u) : u; }
   function media(m) {
     var cadre = el("div", { class: "cadre" });
     var etiquette = { image: null, video: "Vidéo", youtube: "Vidéo", modele3d: "3D · fais tourner" }[m.type];
     if (m.type === "image") {
       var btn = el("button", { class: "zoom", type: "button", "aria-label": "Agrandir : " + (m.legende || "image") }, [
-        el("img", { src: m.src, alt: m.legende || "", loading: "lazy" })
+        el("img", { src: url(m.src), alt: m.legende || "", loading: "lazy" })
       ]);
-      btn.addEventListener("click", function () { ouvrir(m.src, m.legende); });
+      btn.addEventListener("click", function () { ouvrir(url(m.src), m.legende); });
       cadre.appendChild(btn);
     } else if (m.type === "video") {
-      cadre.appendChild(el("video", { src: m.src, poster: m.poster, controls: "", preload: "metadata", playsinline: "" }));
+      cadre.appendChild(el("video", { src: url(m.src), poster: url(m.poster), controls: "", preload: "metadata", playsinline: "" }));
       etiquette = null;
     } else if (m.type === "youtube") {
       cadre.appendChild(el("iframe", {
@@ -59,7 +60,7 @@
     } else if (m.type === "modele3d") {
       chargerModelViewer();
       cadre.appendChild(el("model-viewer", {
-        src: m.src, poster: m.poster, alt: m.legende || "Modèle 3D",
+        src: url(m.src), poster: url(m.poster), alt: m.legende || "Modèle 3D",
         "camera-controls": "", "auto-rotate": "", "shadow-intensity": "1", "interaction-prompt": "none", loading: "lazy"
       }));
     } else return null;
@@ -71,7 +72,7 @@
     if (!ok.length) {
       return EDITION ? el("div", { class: "emplacement", text: "Emplacement médias → contenu.js, " + chemin + ".medias : ajoute une image, une vidéo ou un modèle 3D (exemples en haut du fichier)." }) : null;
     }
-    return el("div", { class: "medias" + (ok.length > 1 ? " multi" : "") }, ok);
+    return el("div", { class: "medias" + (ok.length === 2 ? " deux" : ok.length > 2 ? " multi" : "") }, ok);
   }
 
   /* ---------- Visionneuse ---------- */
@@ -92,11 +93,12 @@
   var h1 = $("h-nom"); h1.textContent = ID.prenom || "";
   if (ID.nom) h1.appendChild(el("span", { class: "nom-fam", text: ID.nom }));
   $("h-titre").textContent = ID.titre || "";
+  if (ID.photo) $("haut").appendChild(el("img", { class: "photo", src: url(ID.photo), alt: nomComplet }));
   $("h-accroche").textContent = ID.accroche || "";
   $("h-dispo").textContent = ID.disponibilite || "";
   var act = $("h-actions");
   act.appendChild(el("a", { class: "btn plein", href: "#phare", text: "Voir S.T.A.R." }));
-  if (ID.cv) act.appendChild(el("a", { class: "btn", href: ID.cv, target: "_blank", rel: "noopener", text: "Télécharger mon CV" }));
+  if (ID.cv) act.appendChild(el("a", { class: "btn", href: url(ID.cv), target: "_blank", rel: "noopener", text: "Télécharger mon CV" }));
   if (ID.github) act.appendChild(el("a", { class: "btn", href: ID.github, target: "_blank", rel: "noopener", text: "GitHub ↗" }));
   if (ID.linkedin) act.appendChild(el("a", { class: "btn", href: ID.linkedin, target: "_blank", rel: "noopener", text: "LinkedIn ↗" }));
 
@@ -111,7 +113,12 @@
     var w = el("div", { class: "wrap" });
     w.appendChild(el("p", { class: "eyebrow", text: "Projet phare · " + (phare.periode || "") }));
     w.appendChild(el("div", { class: "phare-tete" }, [
-      el("div", null, [el("h2", { id: "phare-titre", text: phare.titre }), phare.sousTitre ? el("p", { class: "sous", text: phare.sousTitre }) : null]),
+      el("div", null, [
+        phare.logo
+          ? el("h2", { id: "phare-titre", class: "logo-titre" }, [el("img", { src: url(phare.logo), alt: phare.titre })])
+          : el("h2", { id: "phare-titre", text: phare.titre }),
+        phare.sousTitre ? el("p", { class: "sous", text: phare.sousTitre }) : null
+      ]),
       badge(phare.statut)
     ]));
     w.appendChild(el("p", { class: "phare-resume", text: phare.resume || "" }));
@@ -221,94 +228,4 @@
     ])
   ]));
 
-  /* ---------- Viseur : simulation de suivi ---------- */
-  var cv = $("viseur"), ctx = cv.getContext("2d");
-  var W = cv.width, H = cv.height;
-  var css = {};
-  function lireCouleurs() {
-    var s = getComputedStyle(document.documentElement);
-    ["--encre", "--gris", "--trait", "--accent", "--surface", "--ambre"].forEach(function (k) { css[k] = s.getPropertyValue(k).trim(); });
-  }
-  lireCouleurs();
-  if (window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { lireCouleurs(); if (!anime) dessiner(0); });
-
-  var cible = { x: W / 2, y: H / 2 }, vis = { x: W / 2, y: H / 2, vx: 0, vy: 0 }, mesure = { x: W / 2, y: H / 2 };
-  var t0 = performance.now(), dernier = t0, anime = !matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function trajectoire(t) {
-    return {
-      x: W / 2 + Math.sin(t * 0.37) * W * 0.34 + Math.sin(t * 1.3) * 18,
-      y: H * 0.46 + Math.sin(t * 0.61 + 1) * H * 0.26 + Math.cos(t * 1.7) * 10
-    };
-  }
-  function drone(x, y, couleur) {
-    ctx.strokeStyle = couleur; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(x - 9, y - 9); ctx.lineTo(x + 9, y + 9); ctx.moveTo(x + 9, y - 9); ctx.lineTo(x - 9, y + 9); ctx.stroke();
-    [[-9, -9], [9, -9], [-9, 9], [9, 9]].forEach(function (d) { ctx.beginPath(); ctx.arc(x + d[0], y + d[1], 5, 0, 7); ctx.stroke(); });
-  }
-  function dessiner(t) {
-    ctx.clearRect(0, 0, W, H);
-    // grille et graduations d'azimut
-    ctx.strokeStyle = css["--trait"]; ctx.lineWidth = 1;
-    for (var gx = 0; gx <= W; gx += 40) { ctx.beginPath(); ctx.moveTo(gx + .5, 0); ctx.lineTo(gx + .5, H); ctx.stroke(); }
-    for (var gy = 0; gy <= H; gy += 40) { ctx.beginPath(); ctx.moveTo(0, gy + .5); ctx.lineTo(W, gy + .5); ctx.stroke(); }
-    ctx.fillStyle = css["--gris"]; ctx.font = "500 11px 'IBM Plex Mono', monospace";
-    for (var a = -60; a <= 60; a += 20) { var px = W / 2 + a / 60 * (W / 2 - 20); ctx.fillText((a > 0 ? "+" : "") + a + "°", px - 12, H - 10); }
-    // cible + boîte de détection
-    drone(cible.x, cible.y, css["--encre"]);
-    var bw = 52, bh = 40;
-    ctx.strokeStyle = css["--ambre"]; ctx.lineWidth = 1.5;
-    ctx.strokeRect(mesure.x - bw / 2, mesure.y - bh / 2, bw, bh);
-    ctx.fillStyle = css["--ambre"]; ctx.fillText("drone", mesure.x - bw / 2, mesure.y - bh / 2 - 6);
-    // trace de la consigne
-    ctx.strokeStyle = css["--accent"]; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(vis.x, vis.y, 30, 0, 7); ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(vis.x - 46, vis.y); ctx.lineTo(vis.x - 14, vis.y); ctx.moveTo(vis.x + 14, vis.y); ctx.lineTo(vis.x + 46, vis.y);
-    ctx.moveTo(vis.x, vis.y - 46); ctx.lineTo(vis.x, vis.y - 14); ctx.moveTo(vis.x, vis.y + 14); ctx.lineTo(vis.x, vis.y + 46);
-    ctx.stroke();
-    ctx.fillStyle = css["--accent"]; ctx.beginPath(); ctx.arc(vis.x, vis.y, 2.5, 0, 7); ctx.fill();
-    // ligne d'erreur
-    ctx.setLineDash([3, 4]); ctx.strokeStyle = css["--gris"]; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(vis.x, vis.y); ctx.lineTo(mesure.x, mesure.y); ctx.stroke(); ctx.setLineDash([]);
-  }
-  var cAz = $("v-az"), cEl = $("v-el"), cErr = $("v-err"), cFps = $("v-fps"), compte = 0, fpsT = t0;
-  function majTexte() {
-    var az = (vis.x - W / 2) / (W / 2 - 20) * 60;
-    var site = (1 - vis.y / H) * 45;
-    var err = Math.hypot(mesure.x - vis.x, mesure.y - vis.y);
-    cAz.textContent = (az >= 0 ? "+" : "") + az.toFixed(1) + "°";
-    cEl.textContent = site.toFixed(1) + "°";
-    cErr.textContent = Math.round(err) + " px";
-  }
-  function pas(now) {
-    var dt = Math.min(0.05, (now - dernier) / 1000); dernier = now;
-    var t = (now - t0) / 1000;
-    var p = trajectoire(t); cible.x = p.x; cible.y = p.y;
-    // mesure bruitée puis filtrée (comme une détection image par image)
-    mesure.x += (cible.x + (Math.random() - .5) * 6 - mesure.x) * 0.5;
-    mesure.y += (cible.y + (Math.random() - .5) * 6 - mesure.y) * 0.5;
-    // asservissement type PD sur la consigne
-    var kp = 38, kd = 10;
-    vis.vx += (kp * (mesure.x - vis.x) - kd * vis.vx) * dt;
-    vis.vy += (kp * (mesure.y - vis.y) - kd * vis.vy) * dt;
-    vis.x += vis.vx * dt; vis.y += vis.vy * dt;
-    dessiner(t); majTexte();
-    compte++; if (now - fpsT > 1000) { cFps.textContent = "CAM 0 · " + compte + " IPS"; compte = 0; fpsT = now; }
-    if (anime && visible) requestAnimationFrame(pas);
-  }
-  var visible = true;
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (e) {
-      var v = e[0].isIntersecting;
-      if (v && !visible && anime) { visible = true; dernier = performance.now(); requestAnimationFrame(pas); }
-      visible = v;
-    }).observe(cv);
-  }
-  if (anime) requestAnimationFrame(pas);
-  else {
-    // mouvement réduit : une image fixe, légèrement en retard sur la cible
-    var p = trajectoire(2.2); cible.x = mesure.x = p.x; cible.y = mesure.y = p.y;
-    vis.x = p.x - 22; vis.y = p.y + 14; dessiner(0); majTexte();
-  }
 })();

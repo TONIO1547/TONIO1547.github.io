@@ -39,9 +39,9 @@ window.PORTFOLIO = {
     disponibilite: "Ouvert aux stages en robotique et systèmes embarqués",
     email: "tonio.74370@gmail.com",
     github: "https://github.com/TONIO1547",
-    linkedin: "www.linkedin.com/in/antoine-pelissier1",                  // ← colle l'URL de ton profil LinkedIn si tu en as un
+    linkedin: "https://www.linkedin.com/in/antoine-pelissier1",                  // ← colle l'URL de ton profil LinkedIn si tu en as un
     cv: "media/CV-1.pdf",                        // ← ex. "media/CV_Antoine.pdf" après l'avoir déposé dans media/
-    photo: "pitch STAR.png"                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
+    photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
   },
 
   miseAJour: "Octobre 2026",
@@ -54,7 +54,8 @@ window.PORTFOLIO = {
       id: "star",
       phare: true,
       titre: "S.T.A.R.",
-      sousTitre: "Surveillance Track Alert Repport",
+      sousTitre: "Sentinel Track Alert Report",
+      logo: "media/pitch STAR.png",   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
       periode: "Projet personnel",
       statut: "En cours",
       resume: "Tourelle autonome qui détecte un drone à la caméra, le suit en temps réel et alerte le propriétaire. Projet personnel mené de bout en bout : mécanique, électronique, vision, asservissement et logiciel. Porté en parallèle comme projet d'entreprise avec le statut étudiant-entrepreneur.",
@@ -105,7 +106,9 @@ window.PORTFOLIO = {
         // { texte: "Code sur GitHub", url: "https://github.com/TONIO1547/STAR" },  ← à activer si tu rends le dépôt public
       ],
       medias: [
-        // Ajoute ici photos, vidéos de suivi, modèle 3D de la tourelle…
+        { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg", legende: "V1 : la tourelle suit le drone (PID) et le pointe au laser" },
+        { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg", legende: "V1 : détection du drone en direct sur les deux caméras" }
+        // Ajoute ici d'autres photos, vidéos, ou le modèle 3D de la tourelle…
       ]
     },
 
