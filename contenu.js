@@ -40,8 +40,8 @@ window.PORTFOLIO = {
     email: "tonio.74370@gmail.com",
     github: "https://github.com/TONIO1547",
     linkedin: "www.linkedin.com/in/antoine-pelissier1",                  // ← colle l'URL de ton profil LinkedIn si tu en as un
-    cv: "",                        // ← ex. "media/CV_Antoine.pdf" après l'avoir déposé dans media/
-    photo: ""                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
+    cv: "media/CV-1.pdf",                        // ← ex. "media/CV_Antoine.pdf" après l'avoir déposé dans media/
+    photo: "pitch STAR.png"                      // ← ex. "media/photo.jpg" (photo carrée de préférence)
   },
 
   miseAJour: "Octobre 2026",
@@ -54,7 +54,7 @@ window.PORTFOLIO = {
       id: "star",
       phare: true,
       titre: "S.T.A.R.",
-      sousTitre: "Système de Tourelle Anti-drone Robotisé",
+      sousTitre: "Surveillance Track Alert Repport",
       periode: "Projet personnel",
       statut: "En cours",
       resume: "Tourelle autonome qui détecte un drone à la caméra, le suit en temps réel et alerte le propriétaire. Projet personnel mené de bout en bout : mécanique, électronique, vision, asservissement et logiciel. Porté en parallèle comme projet d'entreprise avec le statut étudiant-entrepreneur.",
