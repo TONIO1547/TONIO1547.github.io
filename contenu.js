@@ -79,7 +79,7 @@ window.PORTFOLIO = {
       phare: true,
       titre: "S.T.A.R.",
       sousTitre: "Sentinel Track Alert Report",
-      logo: "media/pitch STAR.png",   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
+      logo: "media/logo.png",   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
       periode: { fr: "Projet personnel", en: "Personal project" },
       statut: "En cours",
       resume: {
@@ -114,7 +114,7 @@ window.PORTFOLIO = {
                 fr: "Premier essai de détection de drone par IA, avec un modèle YOLOv5n que j'ai fine-tuné.",
                 en: "First AI drone detection test, using a YOLOv5n model I fine-tuned."
               },
-              media: { type: "video", src: "media/demo detection deux cam.mp4", poster: "media/demo detection deux cam.jpg",
+              media: { type: "video", src: "media/demo detection deux cam.mp4",
                        legende: { fr: "Détection du drone en direct sur les deux caméras", en: "Live drone detection on both cameras" } }
             },
             {
@@ -122,7 +122,7 @@ window.PORTFOLIO = {
                 fr: "Test de suivi pour régler le PID de manière itérative, dans le but d'obtenir le tracking le plus fluide possible.",
                 en: "Tracking test used to tune the PID iteratively, aiming for the smoothest possible tracking."
               },
-              media: { type: "video", src: "media/demo_tracking.mp4", poster: "media/demo_tracking.jpg",
+              media: { type: "video", src: "media/demo_tracking.mp4",
                        legende: { fr: "La tourelle suit le drone (PID) et le pointe au laser", en: "The turret tracks the drone (PID) and points the laser at it" } }
             }
           ]
