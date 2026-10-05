@@ -162,9 +162,9 @@ window.PORTFOLIO = {
       ],
 
       objectifs: [
-        { fr: "Suivi stable d'un drone à 100 m, jusqu'à 100 km/h", en: "Stable tracking of a drone at 100 m, up to 100 km/h" },
-        { fr: "Application d'alerte avec flux vidéo et rapport d'incident généré", en: "Alert app with video stream and generated incident report" },
-        { fr: "Mise en service chez de premiers particuliers", en: "First installations at private homes" }
+        { fr: "Détecter et suivre tout type de drone à 100 m, jusqu'à 100 km/h", en: "Detect and track any type of drone at 100 m, up to 100 km/h" },
+        { fr: "Une application qui alerte le propriétaire et envoie un rapport d'incident détaillé", en: "An app that alerts the owner and sends a detailed incident report" },
+        { fr: "Une IA de détection assez fiable pour que le système puisse être commercialisé", en: "A detection AI reliable enough for the system to be sold commercially" }
       ],
 
       tags: ["Jetson", "YOLO", "TensorRT", "Python", "PID", "BLDC / FOC", "ESP32", "SolidWorks"],
