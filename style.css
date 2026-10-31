@@ -369,4 +369,4 @@ footer.pied { padding-block: clamp(64px, 9vw, 112px) 32px; }
 .phare-centre .pied-phare { justify-content: center; flex-direction: column; gap: 18px; }
 .phare-centre .pied-phare .tags { justify-content: center; }
 @media (max-width: 640px) { .cartouche tr { grid-template-columns: 1fr 1fr; } }
-.projet .cadre-image img { object-position: center 30%; }
+.projet .cadre-image img { object-position: center 35%; }
