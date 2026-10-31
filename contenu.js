@@ -218,11 +218,11 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
             { fr: "Régulateur LDO TLV75733 : abaisse le 5 V en un 3,3 V propre pour le capteur", en: "TLV75733 LDO regulator: turns the 5 V supply into a clean 3.3 V for the sensor" },
             { fr: "Protection ESD ESDS304 sur les quatre lignes SPI", en: "ESDS304 ESD protection on the four SPI lines" },
             { fr: "Résistances série de 22 Ω sur le bus SPI et résistance de tirage 10 kΩ sur CSN", en: "22 Ω series resistors on the SPI bus and a 10 kΩ pull-up on CSN" },
-            { fr: "Drivers de LED AL5809 à courant constant : une LED d'alimentation, une LED d'activité", en: "AL5809 constant-current LED drivers: one power LED, one activity LED" },
+            { fr: "Deux LED avec résistances de 330 Ω : une LED d'alimentation, une LED d'activité", en: "Two LEDs with 330 Ω resistors: one power LED, one activity LED" },
             { fr: "Condensateurs de découplage 100 nF et 1 µF sur chaque alimentation", en: "100 nF and 1 µF decoupling capacitors on every supply" }
           ],
           medias: [
-            { type: "image", src: "media/encodeur_schem_raw.png", legende: { fr: "Schéma électrique de la carte (KiCad)", en: "Board schematic (KiCad)" } }
+            { type: "image", src: "media/encodeur_schema.png", legende: { fr: "Schéma électrique de la carte (KiCad)", en: "Board schematic (KiCad)" } }
           ]
         },
         {
@@ -244,7 +244,7 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
             }
           ],
           medias: [
-            { type: "image", src: "media/encodeur_schem.png", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
+            { type: "image", src: "media/encodeur_layout.png", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
           ]
         },
         {
