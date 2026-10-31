@@ -248,23 +248,22 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
           ]
         },
         {
-          titre: { fr: "4. Intégration dans le projet", en: "4. Integration into the project" },
+          titre: { fr: "4. Fabrication et intégration dans le projet", en: "4. Manufacturing and integration" },
           texte: {
-            fr: `Le modèle 3D de la carte, exporté de KiCad, sert à l'intégrer dans la CAO de la tourelle et à vérifier l'encombrement et les fixations.
+            fr: `La carte a été fabriquée, soudée puis câblée : elle se raccorde au contrôleur par son connecteur 7 broches (SPI, LED, 5 V et masse).
 
-Sur S.T.A.R., la carte mesure la position de l'axe tilt. Cette position est ainsi connue de deux manières indépendantes : par le moteur gimbal GL40 et par cet encodeur. Croiser les deux mesures apporte une meilleure précision, et permet de détecter puis de corriger les données si l'un des capteurs se met à dériver ou à renvoyer des valeurs aberrantes.`,
-            en: `The board's 3D model, exported from KiCad, is used to fit it into the turret CAD and to check clearances and mounting.
+Sur S.T.A.R., elle mesure la position de l'axe tilt. Cette position est ainsi connue de deux manières indépendantes : par le moteur gimbal GL40 et par cet encodeur. Croiser les deux mesures apporte une meilleure précision, et permet de détecter puis de corriger les données si l'un des capteurs se met à dériver ou à renvoyer des valeurs aberrantes.`,
+            en: `The board was manufactured, soldered and wired: it connects to the controller through its 7-pin connector (SPI, LED, 5 V and ground).
 
-On S.T.A.R., the board measures the position of the tilt axis. That position is therefore known in two independent ways: through the GL40 gimbal motor and through this encoder. Cross-checking both measurements improves accuracy, and makes it possible to detect and correct the data if one sensor starts drifting or returning outliers.`
+On S.T.A.R., it measures the position of the tilt axis. That position is therefore known in two independent ways: through the GL40 gimbal motor and through this encoder. Cross-checking both measurements improves accuracy, and makes it possible to detect and correct the data if one sensor starts drifting or returning outliers.`
           },
           medias: [
-            { type: "image", src: "media/encodeur.png", legende: { fr: "Modèle 3D de la carte (KiCad)", en: "3D model of the board (KiCad)" } }
+            { type: "image", src: "media/encodeur_carte_reelle.jpg", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
           ]
-        },
-        { titre: { fr: "Fabrication et tests", en: "Manufacturing and testing" }, texte: { fr: "", en: "" } }
+        }
       ],
       medias: [
-        { type: "image", src: "media/encodeur.png", legende: { fr: "Rendu 3D de la carte (KiCad)", en: "3D render of the board (KiCad)" } }
+        { type: "image", src: "media/encodeur_carte_reelle.jpg", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
       ]
     },
 
