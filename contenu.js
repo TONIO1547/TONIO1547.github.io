@@ -59,15 +59,22 @@ window.PORTFOLIO = {
       fr: "Je conçois des robots qui voient, décident et bougent : vision par ordinateur, électronique embarquée, cartes électroniques et CAO mécanique.",
       en: "I design robots that see, decide and move: computer vision, embedded electronics, custom PCBs and mechanical CAD."
     },
-    disponibilite: { fr: "Ouvert aux stages en robotique et systèmes embarqués", en: "Open to internships in robotics and embedded systems" },
+    disponibilite: { fr: "Disponible pour un stage", en: "Available for an internship" },
+    disponibiliteDate: { fr: "Avril 2027 · 4 mois", en: "April 2027 · 4 months" },
+    lieu: "Sophia Antipolis",
+    coordonnees: "43.6155° N · 7.0719° E",   // ← campus de Sophia (approximatif)
+    apropos: {
+      fr: "Étudiant en robotique autonome à Polytech Nice Sophia, passionné par la conception de systèmes complets : mécanique (CAO SolidWorks), électronique embarquée (conception de PCB sous KiCad), vision par ordinateur et asservissement. Autonome et orienté projet, j'ai conçu et développé de bout en bout une tourelle robotisée de détection et de suivi de drones. Je cherche un stage de 4 mois pour contribuer à des développements concrets en robotique.",
+      en: "Autonomous robotics student at Polytech Nice Sophia, passionate about designing complete systems: mechanics (SolidWorks CAD), embedded electronics (PCB design with KiCad), computer vision and control. Autonomous and project-driven, I designed and developed a drone detection and tracking robotic turret from end to end. I am looking for a 4-month internship to contribute to hands-on robotics development."
+    },
     email: "tonio.74370@gmail.com",
     github: "https://github.com/TONIO1547",
     linkedin: "https://www.linkedin.com/in/antoine-pelissier1",
-    cv: "media/CV-1.pdf",          // ← tu peux mettre un CV différent par langue : { fr: "media/CV-1.pdf", en: "media/CV-en.pdf" }
-    photo: "media/photo.jpg"       // ← photo affichée en haut de la page d'accueil
+    cv: { fr: "media/CV-Pelissier.pdf", en: "media/CV-Pelissier_EN.pdf" },   // ← un CV par langue
+    photo: "media/opt/photo.webp"       // ← photo affichée en haut de la page d'accueil
   },
 
-  miseAJour: "10/2026",
+  miseAJour: "11/2026",
 
   /* ---------- Projets ----------
      phare: true  → le projet est mis en avant en grand en haut de la page (un seul).
@@ -79,6 +86,21 @@ window.PORTFOLIO = {
       phare: true,
       titre: "S.T.A.R.",
       sousTitre: "Sentinel Track Alert Report",
+      description: { fr: "Système de détection et de suivi de drones", en: "Drone detection and tracking system" },
+      // Vidéo affichée en grand dans la section S.T.A.R.
+      demoPrincipale: { src: "media/opt/demo_final.mp4", poster: "media/opt/demo_final.webp",
+        legende: { fr: "La V1 détecte le drone et la tourelle le suit", en: "V1 detects the drone and the turret tracks it" } },
+      // Chiffres mesurés uniquement (ici : fin d'entraînement du détecteur). Supprime ce bloc pour masquer le bandeau.
+      mesures: {
+        source: { fr: "Détecteur de drones fine-tuné · run du 26/04/2026 · 80 époques · mesuré sur le jeu de validation",
+                  en: "Fine-tuned drone detector · run of 26 Apr 2026 · 80 epochs · measured on the validation set" },
+        valeurs: [
+          { v: 97.5, nom: { fr: "Précision", en: "Precision" } },
+          { v: 97.6, nom: { fr: "Rappel", en: "Recall" } },
+          { v: 99.0, nom: "mAP50" },
+          { v: 71.1, nom: "mAP50-95" }
+        ]
+      },
       logo: "media/logo.png",
       photoAccueil: "media/robot_complet.jpg",   // ← seule photo de S.T.A.R. affichée en page d'accueil
       legendePhotoAccueil: { fr: "La V1 de S.T.A.R.", en: "S.T.A.R. V1" },   // ← logo affiché à la place du titre (laisse "" pour afficher le texte)
@@ -115,7 +137,7 @@ window.PORTFOLIO = {
           ],
           // Photo et modèle 3D de la V1
           medias: [
-            { type: "image", src: "media/robot_complet.jpg", legende: { fr: "Le robot V1 complet", en: "The complete V1 robot" } },
+            { type: "image", src: "media/opt/robot_complet.webp", legende: { fr: "Le robot V1 complet", en: "The complete V1 robot" } },
             { type: "modele3d", src: "media/modele_v1.glb", rotation: 90,
               legende: { fr: "Modèle 3D de la V1 : clique et fais glisser pour tourner autour", en: "3D model of V1: click and drag to orbit around it" } }
           ],
@@ -126,7 +148,7 @@ window.PORTFOLIO = {
                 fr: "Premier essai de détection de drone par IA, avec un modèle YOLOv5n que j'ai fine-tuné.",
                 en: "First AI drone detection test, using a YOLOv5n model I fine-tuned."
               },
-              media: { type: "video", src: "media/demo detection deux cam.mp4",
+              media: { type: "video", src: "media/opt/demo_detection.mp4", poster: "media/opt/demo_detection.webp",
                        legende: { fr: "Détection du drone en direct sur les deux caméras", en: "Live drone detection on both cameras" } }
             },
             {
@@ -134,7 +156,7 @@ window.PORTFOLIO = {
                 fr: "Test de suivi pour régler le PID de manière itérative, dans le but d'obtenir le tracking le plus fluide possible.",
                 en: "Tracking test used to tune the PID iteratively, aiming for the smoothest possible tracking."
               },
-              media: { type: "video", src: "media/demo_tracking.mp4",
+              media: { type: "video", src: "media/opt/demo_tracking.mp4", poster: "media/opt/demo_tracking.webp",
                        legende: { fr: "La tourelle suit le drone (PID) et le pointe au laser", en: "The turret tracks the drone (PID) and points the laser at it" } }
             }
           ]
@@ -222,7 +244,7 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
             { fr: "Condensateurs de découplage 100 nF et 1 µF sur chaque alimentation", en: "100 nF and 1 µF decoupling capacitors on every supply" }
           ],
           medias: [
-            { type: "image", src: "media/encodeur_schema.png", legende: { fr: "Schéma électrique de la carte (KiCad)", en: "Board schematic (KiCad)" } }
+            { type: "image", src: "media/opt/encodeur_schema.webp", legende: { fr: "Schéma électrique de la carte (KiCad)", en: "Board schematic (KiCad)" } }
           ]
         },
         {
@@ -244,7 +266,7 @@ This is essential to drive a brushless motor with field-oriented control (FOC): 
             }
           ],
           medias: [
-            { type: "image", src: "media/encodeur_layout.png", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
+            { type: "image", src: "media/opt/encodeur_layout.webp", legende: { fr: "Placement et routage de la carte sous KiCad", en: "Board placement and routing in KiCad" } }
           ]
         },
         {
@@ -258,39 +280,13 @@ Sur S.T.A.R., elle mesure la position de l'axe tilt. Cette position est ainsi co
 On S.T.A.R., it measures the position of the tilt axis. That position is therefore known in two independent ways: through the GL40 gimbal motor and through this encoder. Cross-checking both measurements improves accuracy, and makes it possible to detect and correct the data if one sensor starts drifting or returning outliers.`
           },
           medias: [
-            { type: "image", src: "media/encodeur_carte_reelle.jpg", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
+            { type: "image", src: "media/opt/encodeur_carte_reelle.webp", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
           ]
         }
       ],
       medias: [
-        { type: "image", src: "media/encodeur_carte_reelle.jpg", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
+        { type: "image", src: "media/opt/encodeur_carte_reelle.webp", legende: { fr: "La carte fabriquée et câblée", en: "The manufactured and wired board" } }
       ]
-    },
-
-    {
-      id: "esp32s3",
-      titre: { fr: "Carte de développement ESP32-S3", en: "ESP32-S3 development board" },
-      periode: "",
-      statut: "Terminé",
-      resume: {
-        fr: "Carte microcontrôleur sur mesure, alimentée en USB-C, conçue de la schématique au routage.",
-        en: "Custom microcontroller board powered over USB-C, designed from schematic to layout."
-      },
-      points: [
-        { fr: "Convertisseur buck TPS54302 et LDO AZ1117", en: "TPS54302 buck converter and AZ1117 LDO" },
-        { fr: "USB-C avec résistances CC pour demander 3 A", en: "USB-C with CC resistors to request 3 A" },
-        { fr: "Pilotage de LED adressables WS2812B", en: "WS2812B addressable LED driving" }
-      ],
-      tags: ["KiCad", "ESP32-S3", { fr: "Alimentation", en: "Power supply" }, "USB-C"],
-      liens: [],
-      // Texte de la page détaillée (une section vide n'apparaît pas)
-      details: [
-        { titre: { fr: "Pourquoi cette carte", en: "Why this board" }, texte: { fr: "", en: "" } },
-        { titre: { fr: "Schéma et choix des composants", en: "Schematic and component choices" }, texte: { fr: "", en: "" } },
-        { titre: { fr: "Routage", en: "PCB layout" }, texte: { fr: "", en: "" } },
-        { titre: { fr: "Fabrication et tests", en: "Manufacturing and testing" }, texte: { fr: "", en: "" } }
-      ],
-      medias: []
     },
 
     {
@@ -335,7 +331,7 @@ La forme en biseau à l'avant sert à passer sous l'adversaire pour le soulever 
 The wedge shape at the front is meant to slide under the opponent to lift and push it. The shell went through six versions before the final one, and the parts were 3D printed.`
           },
           medias: [
-            { type: "image", src: "media/sumo_cao.png", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
+            { type: "image", src: "media/opt/sumo_cao.webp", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
           ]
         },
         {
@@ -362,7 +358,7 @@ The wedge shape at the front is meant to slide under the opponent to lift and pu
         { titre: { fr: "Résultat", en: "Outcome" }, texte: { fr: "", en: "" } }
       ],
       medias: [
-        { type: "image", src: "media/sumo_cao.png", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
+        { type: "image", src: "media/opt/sumo_cao.webp", legende: { fr: "Le robot sumo modélisé sous SolidWorks", en: "The sumo robot modelled in SolidWorks" } }
       ]
     }
   ],

@@ -3,95 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Antoine — Robotique</title>
-  <meta name="description" content="Portfolio d'Antoine, étudiant ingénieur en robotique autonome à Polytech Nice Sophia : S.T.A.R., systèmes embarqués, PCB, vision par ordinateur.">
-  <meta property="og:title" content="Antoine — Portfolio robotique">
-  <meta property="og:description" content="Vision par ordinateur, électronique embarquée, PCB et CAO. Projet phare : S.T.A.R., tourelle anti-drone autonome.">
+  <title>Antoine Pelissier — Robotique autonome</title>
+  <meta name="description" content="Portfolio d'Antoine Pelissier, étudiant ingénieur en robotique autonome à Polytech Nice Sophia. Projet phare : S.T.A.R., système de détection et de suivi de drones. Disponible pour un stage en avril 2027.">
+  <meta property="og:title" content="Antoine Pelissier — Robotique autonome">
+  <meta property="og:description" content="Vision par ordinateur, électronique embarquée, PCB et CAO. Projet phare : S.T.A.R., système de détection et de suivi de drones.">
+  <meta name="theme-color" content="#04050b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-  <!-- Les fichiers du site sont rechargés à chaque visite, pour que les modifications se voient tout de suite -->
-  <script>window.V = Date.now(); document.write('<link rel="stylesheet" href="style.css?v=' + window.V + '">');</script>
-  <noscript><link rel="stylesheet" href="style.css"></noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="accueil">
-  <a class="skip" href="#contenu" data-t>Aller au contenu</a>
+<body>
+<!--PAGE-->
+<a class="skip" href="#contenu" data-i="skip">Aller au contenu</a>
+<canvas id="particles" aria-hidden="true"></canvas>
 
-  <header class="nav">
-    <div class="wrap nav-in">
-      <a class="nav-nom" href="#haut" id="nav-nom">Antoine</a>
-      <nav aria-label="Sections">
-        <a href="#phare">S.T.A.R.</a>
-        <a href="#projets" data-t>Projets</a>
-        <a href="#parcours" data-t>Parcours</a>
-        <a href="#contact" data-t>Contact</a>
-      </nav>
-      <button class="langue mono" id="langue" type="button"><span data-l="fr">FR</span><span class="sep" aria-hidden="true">/</span><span data-l="en">EN</span></button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.7 6.6 4.7 10.9 12 12-7.3 1.1-11.3 5.4-12 12-.7-6.6-4.7-10.9-12-12C7.3 10.9 11.3 6.6 12 0z"/></symbol>
+  <symbol id="i-ret" viewBox="0 0 34 34"><g fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="17" cy="17" r="9"/><circle cx="17" cy="17" r="2.5"/><path d="M17 0v9M17 25v9M0 17h9M25 17h9"/></g></symbol>
+  <symbol id="i-arr" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M3 11 11 3M5 3h6v6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M7 1v11M2.5 7.5 7 12l4.5-4.5"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.800-2 3.700-2 4 0 4.700 2.600 4.700 6V21h-4v-5.200c0-1.200 0-2.800-1.700-2.800s-2 1.300-2 2.700V21h-4z"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-nom" href="#haut" id="nav-nom">Antoine Pelissier</a>
+    <nav aria-label="Sections" class="nav-links">
+      <a href="#star">S.T.A.R.</a>
+      <a href="#projets" data-i="nav.projets">Projets</a>
+      <a href="#parcours" data-i="nav.parcours">Parcours</a>
+      <a href="#outils" data-i="nav.outils">Outils</a>
+      <a href="#apropos" data-i="nav.apropos">À propos</a>
+      <a href="#contact" data-i="nav.contact">Contact</a>
+    </nav>
+    <div class="nav-side">
+      <a class="nav-in-link" id="nav-linkedin" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
+      <div class="langue mono" role="group" aria-label="Langue / Language">
+        <button type="button" data-l="fr" aria-pressed="true">FR</button><span aria-hidden="true">/</span><button type="button" data-l="en" aria-pressed="false">EN</button>
+      </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main id="contenu">
-    <section class="hero wrap" id="haut">
-      <div class="hero-texte">
-        <p class="eyebrow" id="h-ecole"></p>
-        <h1 id="h-nom"></h1>
-        <p class="hero-titre" id="h-titre"></p>
-        <p class="hero-accroche" id="h-accroche"></p>
-        <p class="dispo" id="h-dispo"></p>
-        <div class="actions" id="h-actions"></div>
-      </div>
+<main id="contenu">
+  <div id="accueil">
+    <section class="band hero" id="haut"><div class="wrap hero-in" id="hero"></div></section>
+    <section class="band star-sec" id="star" aria-labelledby="star-t"><div class="wrap sec" id="star-in"></div></section>
+    <section class="band" id="projets" aria-labelledby="proj-t"><div class="wrap sec" id="projets-in"></div></section>
+    <section class="band" id="parcours" aria-labelledby="parc-t"><div class="wrap sec" id="parcours-in"></div></section>
+    <section class="band" id="outils" aria-labelledby="outils-t"><div class="wrap sec" id="outils-in"></div></section>
+    <section class="band" id="apropos" aria-labelledby="apropos-t"><div class="wrap sec" id="apropos-in"></div></section>
+    <section class="band cta" id="contact" aria-labelledby="contact-t"><div class="wrap sec" id="contact-in"></div><canvas class="sphere" id="sphere" width="600" height="600" aria-hidden="true"></canvas></section>
+  </div>
+  <article class="band fiche" id="fiche" hidden><div class="wrap sec" id="fiche-in"></div></article>
+</main>
 
-    </section>
+<footer class="wrap pied mono" id="pied"></footer>
 
-    <section class="phare" id="phare" aria-labelledby="phare-titre"></section>
+<dialog id="visionneuse" aria-label="Image agrandie">
+  <button class="fermer" id="fermer" type="button" aria-label="Fermer">✕</button>
+  <img id="visionneuse-img" alt="">
+  <p id="visionneuse-leg" class="mono"></p>
+</dialog>
 
-    <section class="wrap bloc" id="projets" aria-labelledby="projets-titre">
-      <div class="bloc-tete">
-        <h2 id="projets-titre" data-t>Autres projets</h2>
-        <p class="bloc-sous" data-t>Électronique, cartes sur mesure et premiers robots.</p>
-      </div>
-      <div class="grille-projets" id="liste-projets"></div>
-    </section>
+<noscript><p style="padding:24px">Ce site a besoin de JavaScript pour afficher son contenu. CV : <a href="media/CV-Pelissier.pdf">français</a> · <a href="media/CV-Pelissier_EN.pdf">English</a>.</p></noscript>
 
-
-    <section class="wrap bloc" id="parcours" aria-labelledby="parcours-titre">
-      <div class="bloc-tete">
-        <h2 id="parcours-titre" data-t>Parcours</h2>
-      </div>
-      <ol class="parcours" id="liste-parcours"></ol>
-    </section>
-
-    <section class="wrap bloc contact" id="contact" aria-labelledby="contact-titre">
-      <div class="bloc-tete">
-        <h2 id="contact-titre" data-t>Contact</h2>
-        <p class="bloc-sous" data-t>Stage, projet, question sur S.T.A.R. : écrivez-moi.</p>
-      </div>
-      <div class="contact-in" id="contact-in"></div>
-    </section>
-  </main>
-
-  <footer class="wrap pied">
-    <table class="cartouche mono" id="cartouche"></table>
-  </footer>
-
-  <dialog id="visionneuse" aria-label="Image agrandie">
-    <button class="fermer" id="fermer" aria-label="Close">✕</button>
-    <img id="visionneuse-img" alt="">
-    <p id="visionneuse-leg"></p>
-  </dialog>
-
-  <script>
-    /* Si contenu.js contient une faute de frappe, on affiche la ligne en cause en haut de la page. */
-    window.addEventListener("error", function (e) {
-      if (!/contenu\.js/.test(e.filename || "")) return;
-      var d = document.createElement("div");
-      d.className = "erreur-contenu";
-      d.textContent = "Erreur dans contenu.js, ligne " + e.lineno + " : " + e.message + ". En général : une virgule, un guillemet ou une accolade } oubliés juste avant cette ligne.";
-      document.body.prepend(d);
-    });
-  </script>
-  <!-- contenu.js est rechargé à chaque visite (pas de cache), pour que tes modifications se voient tout de suite -->
-  <script>document.write('<script src="contenu.js?v=' + window.V + '"><\/script>');</script>
-  <script>document.write('<script src="app.js?v=' + window.V + '"><\/script>');</script>
+<script>
+  /* Si contenu.js contient une faute de frappe, on affiche la ligne en cause en haut de la page. */
+  window.addEventListener("error", function (e) {
+    if (!/contenu\.js/.test(e.filename || "")) return;
+    var d = document.createElement("div");
+    d.className = "erreur-contenu";
+    d.textContent = "Erreur dans contenu.js, ligne " + e.lineno + " : " + e.message + ". En général : une virgule, un guillemet ou une accolade } oubliés juste avant cette ligne.";
+    document.body.prepend(d);
+  });
+</script>
+<script src="contenu.js"></script>
+<script src="app.js"></script>
+<!--/PAGE-->
 </body>
 </html>
